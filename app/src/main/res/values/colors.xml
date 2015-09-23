@@ -1,0 +1,6 @@
+<resources>
+    <color name="button_background">#ff86c57c</color>
+    <color name="button_background_pressed">#ff75bd69</color>
+    <color name="button_text_color">@android:color/black</color>
+    <color name="primary_background">#ff53ad44</color>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Random Number Generator</string>
+
+    <string name="button_text">Generate a Random Number</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>
