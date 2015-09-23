@@ -1,7 +1,10 @@
 <resources>
 
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/primary_background</item>
+        <item name="android:colorPrimary">@color/primary_background</item>
+        <item name="android:colorPrimaryDark">@color/primary_background_dark</item>
+        <item name="android:navigationBarColor">@color/primary_background_dark</item>
     </style>
 
 </resources>
