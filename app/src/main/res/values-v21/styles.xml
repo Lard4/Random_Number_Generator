@@ -3,8 +3,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/primary_background</item>
         <item name="android:colorPrimary">@color/primary_background</item>
-        <item name="android:colorPrimaryDark">@color/primary_background_dark</item>
-        <item name="android:navigationBarColor">@color/primary_background_dark</item>
+        <item name="android:colorPrimaryDark">@color/status_bar_color</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_color</item>
     </style>
 
 </resources>
