@@ -13,5 +13,7 @@
         android:id="@+id/button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/button" />
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:elevation="2dp" />
 </RelativeLayout>
