@@ -7,12 +7,10 @@
 
     <string name="title_activity_number">NumberActivity</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_easter_egg">EasterEggActivity</string>
 
     <string name="about">This wonderful app was made by Kevin Dixson</string>
     <string name="about_line_2">Copyright 2015 - All rights reserved</string>
     <string name="about_line_3">Version 1.0</string>
-    <string name="title_activity_easter_egg">EasterEggActivity</string>
-
-    <string name="easter_shrug">¯\_(ツ)_/¯</string>
 
 </resources>

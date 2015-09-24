@@ -27,11 +27,7 @@
     <style name="RecordLow" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/record_low</item>
-    </style>
-
-    <style name="EasterShrug" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/easter_shrug</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
 </resources>

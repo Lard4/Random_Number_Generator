@@ -12,9 +12,11 @@ public class NumberActivity extends AppCompatActivity {
 
     public int randomNumber;
     public int record;
+    boolean hasRecord;
 
     public NumberActivity() {
         record = 1000000;
+        hasRecord = false;
     }
 
 
@@ -34,6 +36,13 @@ public class NumberActivity extends AppCompatActivity {
 
         min = 1;
         max = 1000000;
+        recordText = "0";
+
+        if(hasRecord = true){
+            setContentView(R.layout.activity_number);
+            TextView tv3 = (TextView) findViewById(R.id.recordLow);
+            if(tv3 != null) tv3.setText(recordText);
+        }
 
         Random rand = new Random();
         newNumber = rand.nextInt(max - min + 1) + min;
@@ -48,13 +57,14 @@ public class NumberActivity extends AppCompatActivity {
 
         if(randomNumber < record) {
             record = randomNumber;
-            recordText = "" + record;
+            recordText = "Record: " + record;
             setContentView(R.layout.activity_number);
             TextView tv2 = (TextView) findViewById(R.id.recordLow);
             if(tv2 != null) tv2.setText(recordText);
+            hasRecord = true;
         }
 
-        final Button button = (Button) findViewById(R.id.button);
+        final Button button = (Button) findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
