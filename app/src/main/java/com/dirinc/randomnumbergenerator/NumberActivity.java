@@ -81,7 +81,6 @@ public class NumberActivity extends AppCompatActivity {
             if(tv2 != null) tv2.setText(recordText);
         }
 
-
         final Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

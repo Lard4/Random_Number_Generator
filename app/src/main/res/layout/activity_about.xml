@@ -10,29 +10,31 @@
         android:text="@string/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_marginTop="97dp"
+        android:id="@+id/about1"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="58dp" />
 
     <TextView style="@style/About"
         android:text="@string/about_line_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_below="@+id/textView2"
+        android:id="@+id/about2"
+        android:layout_below="@+id/about1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="70dp" />
+        android:layout_marginTop="47dp" />
 
-    <TextView style="@style/AboutVersion"
+    <Button style="@style/AboutVersion"
         android:text="@string/about_line_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/aboutversion"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="easterEgg"
+        android:clickable="true" />
 
 </RelativeLayout>

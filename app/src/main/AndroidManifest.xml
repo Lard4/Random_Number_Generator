@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.randomnumbergenerator.MainActivity" />
         </activity>
+        <activity
+            android:name=".EasterEggActivity"
+            android:label="@string/title_activity_easter_egg"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dirinc.randomnumbergenerator.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

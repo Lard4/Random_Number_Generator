@@ -1,45 +1,22 @@
 package com.dirinc.randomnumbergenerator;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-public class AboutActivity extends AppCompatActivity {
-
-    private int clicked;
-
-    public AboutActivity() {
-        clicked = 0;
-    }
+public class EasterEggActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-
-        final Button button = (Button) findViewById(R.id.aboutversion);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-                clicked = clicked + 1;
-                 if (clicked == 5) {
-                        Intent activityChangeIntent = new Intent(AboutActivity.this, EasterEggActivity.class);
-                        AboutActivity.this.startActivity(activityChangeIntent);
-                 }
-            }
-        });
-
+        setContentView(R.layout.activity_easter_egg);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_about, menu);
+        getMenuInflater().inflate(R.menu.menu_easter_egg, menu);
         return true;
     }
 

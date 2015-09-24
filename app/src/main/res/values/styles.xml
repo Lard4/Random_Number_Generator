@@ -19,6 +19,7 @@
     </style>
 
     <style name="AboutVersion" parent="@style/About">
+        <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/about_text_version</item>
     </style>
@@ -26,6 +27,11 @@
     <style name="RecordLow" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/record_low</item>
+    </style>
+
+    <style name="EasterShrug" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/easter_shrug</item>
     </style>
 
 </resources>

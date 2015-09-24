@@ -8,6 +8,7 @@
 
     <dimen name="about_text">40sp</dimen>
     <dimen name="about_text_version">20sp</dimen>
+    <dimen name="easter_shrug">50sp</dimen>
 
     <dimen name="record_low">30sp</dimen>
 </resources>
