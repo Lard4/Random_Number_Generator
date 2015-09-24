@@ -23,5 +23,9 @@
         <item name="android:textSize">@dimen/about_text_version</item>
     </style>
 
+    <style name="RecordLow" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/record_low</item>
+    </style>
 
 </resources>

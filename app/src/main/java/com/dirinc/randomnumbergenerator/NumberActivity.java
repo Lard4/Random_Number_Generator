@@ -15,7 +15,12 @@ public class NumberActivity extends AppCompatActivity {
 
     public int randomNumber;
     public int randomNumberInt;
+    public int record;
     public String randomNumberText;
+
+    public NumberActivity() {
+        record = 1000000;
+    }
 
 
     @Override
@@ -51,22 +56,31 @@ public class NumberActivity extends AppCompatActivity {
         int max;
         int min;
         int newNumber;
-
+        String randomNumberText;
+        String recordText;
 
         min = 1;
-        max = 999999999;
+        max = 1000000;
 
-        Random rn = new Random();
-        newNumber = rn.nextInt(max - min + 1) + min;
+        Random rand = new Random();
+        newNumber = rand.nextInt(max - min + 1) + min;
 
         randomNumber = newNumber;
 
-        String randomNumberText;
         randomNumberText = "" + randomNumber;
 
         setContentView(R.layout.activity_number);
         TextView tv = (TextView) findViewById(R.id.rng);
         if(tv != null) tv.setText(randomNumberText);
+
+        if(randomNumber < record) {
+            record = randomNumber;
+            recordText = "" + record;
+            setContentView(R.layout.activity_number);
+            TextView tv2 = (TextView) findViewById(R.id.recordLow);
+            if(tv2 != null) tv2.setText(recordText);
+        }
+
 
         final Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +89,6 @@ public class NumberActivity extends AppCompatActivity {
                 emptyMethod();
             }
         });
-
     }
 
     public void emptyMethod(){
