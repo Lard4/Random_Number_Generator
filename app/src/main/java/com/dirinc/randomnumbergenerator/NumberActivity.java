@@ -61,7 +61,7 @@ public class NumberActivity extends AppCompatActivity {
         String randomNumberText;
         randomNumberText = "" + randomNumber;
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_number);
         TextView tv = (TextView) findViewById(R.id.rng);
         if(tv != null) tv.setText(randomNumberText);
     }
