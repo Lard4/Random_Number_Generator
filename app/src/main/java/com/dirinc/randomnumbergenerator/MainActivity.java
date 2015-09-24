@@ -49,5 +49,17 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(activityChangeIntent);
             }
         });
+        button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent activityChangeIntent = new Intent(MainActivity.this, AboutActivity.class);
+
+                // currentContext.startActivity(activityChangeIntent);
+
+                MainActivity.this.startActivity(activityChangeIntent);
+                return true;
+            }
+        });
+
     }
 }

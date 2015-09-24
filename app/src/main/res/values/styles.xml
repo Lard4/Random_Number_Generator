@@ -13,4 +13,15 @@
         <item name="android:textSize">@dimen/random_number</item>
     </style>
 
+    <style name="About" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/about_text</item>
+    </style>
+
+    <style name="AboutVersion" parent="@style/About">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/about_text_version</item>
+    </style>
+
+
 </resources>

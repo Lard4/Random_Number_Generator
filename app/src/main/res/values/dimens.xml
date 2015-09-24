@@ -5,4 +5,8 @@
     <dimen name="button_text_padding_right">6dp</dimen>
 
     <dimen name="random_number">21sp</dimen>
+
+    <dimen name="about_text">40sp</dimen>
+    <dimen name="about_text_version">20sp</dimen>
+
 </resources>
