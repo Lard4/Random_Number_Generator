@@ -1,8 +1,8 @@
 <resources>
-    <color name="button_background">#ff428a36</color>
-    <color name="button_background_pressed">#ff3a792f</color>
+    <color name="button_background">#ff6eae57</color>
+    <color name="button_background_pressed">#ff629b4d</color>
     <color name="button_text_color">@android:color/white</color>
-    <color name="primary_background">#ff53ad44</color>
+    <color name="primary_background">#ff7bc261</color>
     <color name="primary_background_dark">@color/button_background</color>
 
     <color name="status_bar_color">@color/primary_background_dark</color>

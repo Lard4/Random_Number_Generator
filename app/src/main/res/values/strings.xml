@@ -3,4 +3,7 @@
 
     <string name="button_text">Generate a Random Number</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_number">NumberActivity</string>
+
+    <string name="random_number">randomNumber</string>
 </resources>
