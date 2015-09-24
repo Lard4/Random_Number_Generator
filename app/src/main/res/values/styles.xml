@@ -8,4 +8,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="RandomNumber" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/random_number</item>
+    </style>
+
 </resources>
