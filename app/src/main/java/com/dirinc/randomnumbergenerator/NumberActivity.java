@@ -17,8 +17,10 @@ public class NumberActivity extends AppCompatActivity {
 
 
     public NumberActivity() {
-        // Take note that record is not defined here so that the user keeps their
-        // records from previous sessions.
+        // If this is not defined here, the record cannot be set.
+        // This is temporary and is a WIP.
+        record = 1000000;
+        hasRecord = false;
     }
 
 
@@ -80,7 +82,7 @@ public class NumberActivity extends AppCompatActivity {
             hasRecord = true;
         }
 
-        // "Do it again" button onClickListner
+        // "Do it again" button onClickListener
         final Button button = (Button) findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
