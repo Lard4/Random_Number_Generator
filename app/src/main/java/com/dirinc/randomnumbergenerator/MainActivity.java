@@ -11,31 +11,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
+        // We are on the MainActivity here.
         setContentView(R.layout.activity_main);
 
+        // This is the onClickListner for the "Generate a random number button"
         final Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action upon user click
+                    Intent activityChangeIntent = new Intent(MainActivity.this, NumberActivity.class);
+                    // Change activities :)
+                    MainActivity.this.startActivity(activityChangeIntent);
+                }
+            });
 
-                Intent activityChangeIntent = new Intent(MainActivity.this, NumberActivity.class);
-
-                // currentContext.startActivity(activityChangeIntent);
-
-                MainActivity.this.startActivity(activityChangeIntent);
-            }
-        });
-        button.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent activityChangeIntent = new Intent(MainActivity.this, AboutActivity.class);
-
-                // currentContext.startActivity(activityChangeIntent);
-
-                MainActivity.this.startActivity(activityChangeIntent);
-                return true;
-            }
-        });
-
+            // If the user longClicks the same button, they will be taken to AboutActivity
+            button.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    // Perform action upon user click
+                    Intent activityChangeIntent = new Intent(MainActivity.this, AboutActivity.class);
+                    // Change activities
+                    MainActivity.this.startActivity(activityChangeIntent);
+                    return true;
+                }
+            });
     }
 }
