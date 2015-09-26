@@ -11,23 +11,22 @@ import java.util.Random;
 
 public class NumberActivity extends AppCompatActivity {
     public int stashedRecord;
-    public boolean userHasRecord;
+    public int minimumRandomNumber = 1;
+    public int maximumRandomNumber = 1000000;
 
     public static final String SHARED_PREFS = "shared_preferences";
 
     public TextView randomNumber;
     public TextView recordNumber;
     public Button doItAgain;
-    // create min,max as global variables
-    public int min = 1;
-    public int max = 1000000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_number);
 
         randomNumber = (TextView) findViewById(R.id.randomNumber);
         recordNumber = (TextView) findViewById(R.id.recordNumber);
@@ -39,7 +38,7 @@ public class NumberActivity extends AppCompatActivity {
             }
         });
 
-        stashedRecord = sharedPreferences.getInt("stashedRecord", max);
+        stashedRecord = sharedPreferences.getInt("stashedRecord", maximumRandomNumber);
         generateNumber();
     }
 
@@ -50,7 +49,7 @@ public class NumberActivity extends AppCompatActivity {
         String stashedRecordString;
 
         Random rand = new Random();
-        randomlyGeneratedNumber = rand.nextInt(max - min + 1) + min;
+        randomlyGeneratedNumber = rand.nextInt(maximumRandomNumber - minimumRandomNumber + 1) + minimumRandomNumber;
 
         randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
 
@@ -71,8 +70,6 @@ public class NumberActivity extends AppCompatActivity {
             if(recordNumber != null) recordNumber.setText(stashedRecordString);
         }
     }
-
-    // you don't need to savePref() because onStop() will save it for you
 
     @Override
     protected void onStop() {
