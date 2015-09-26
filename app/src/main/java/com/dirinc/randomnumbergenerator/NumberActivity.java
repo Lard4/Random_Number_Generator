@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
-import android.util.Log;
 import java.util.Random;
 
 
 public class NumberActivity extends AppCompatActivity {
-    public int newRecord;
     public int stashedRecord;
     int record;
 
