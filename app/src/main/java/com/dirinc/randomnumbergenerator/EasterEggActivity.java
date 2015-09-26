@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class EasterEggActivity extends AppCompatActivity {
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // This is the easter egg kawaii shrug --->   ¯\_(ツ)_/¯

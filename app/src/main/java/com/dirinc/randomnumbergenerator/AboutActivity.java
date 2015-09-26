@@ -16,6 +16,7 @@ public class AboutActivity extends AppCompatActivity {
         clicked = 0;
     }
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // This is the AboutActivity, mmmmm?

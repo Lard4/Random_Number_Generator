@@ -1,99 +1,99 @@
 package com.dirinc.randomnumbergenerator;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.view.View;
+import android.util.Log;
 import java.util.Random;
 
+
 public class NumberActivity extends AppCompatActivity {
+    public int newRecord;
+    public int stashedRecord;
+    int record;
 
-    // Just some fields needed
-    public int randomNumber;
-    public int record;
-    boolean hasRecord;
+    public static final String SHARED_PREFS = "shared_preferences";
 
-
-    public NumberActivity() {
-        // If this is not defined here, the record cannot be set.
-        // This is temporary and is a WIP.
-        record = 1000000;
-        hasRecord = false;
-    }
-
+    public TextView randomNumber;
+    public TextView recordNumber;
+    public Button doItAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number);
 
-        // Start the random number generation process
+        randomNumber = (TextView) findViewById(R.id.randomNumber);
+        recordNumber = (TextView) findViewById(R.id.recordNumber);
+        doItAgain = (Button) findViewById(R.id.doItAgain);
+
+        record = 1000000;
+
+        Integer sr = sharedPreferences.getInt("stashedRecord", stashedRecord);
+
+        record = sr;
+
         generateNumber();
     }
 
     public void generateNumber() {
-        // Local fields needed
         int max;
         int min;
-        int newNumber;
-        String randomNumberText;
-        String recordText;
+        int randomlyGeneratedNumber;
+        String recordString;
+        String randomlyGeneratedNumberString;
+        String stashedRecordString;
 
-        // Define max and min values for random number generation
         min = 1;
         max = 1000000;
 
-        /**
-         * IT IS IMPORTANT THAT
-         * setContentView(R.layout.activity_number);
-         * CANNOT, I REPEAT CAN NOT EXIST IN THIS METHOD.
-         *      This will not allow the record as well as the
-         *      random number to exist in the NumberActivity.
-         */
-
-        // Get a random number between max and min
         Random rand = new Random();
-        newNumber = rand.nextInt(max - min + 1) + min;
+        randomlyGeneratedNumber = rand.nextInt(max - min + 1) + min;
 
-        // The randomly generated number is now called randomNumber
-        randomNumber = newNumber;
+        randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
 
-        // randomNumberText is the string version of randomNumber
-        randomNumberText = "" + randomNumber;
+        recordString = "Record: " + randomlyGeneratedNumber;
 
-        // TextView for the randomly generated number
-        TextView tv = (TextView) findViewById(R.id.rng);
-        if(tv != null) tv.setText(randomNumberText);
+        stashedRecordString = "Record: " + record;
 
-        // If our randomNumber sets a new (lowest) record, then
-        if(randomNumber < record) {
-            // Execute this to set the new record to the randomNumber
-            record = randomNumber;
-            // String version of the record number
-            recordText = "Record: " + record;
+        randomNumber = (TextView) findViewById(R.id.randomNumber);
+        if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
 
-            // TextView for our new record
-            TextView tv2 = (TextView) findViewById(R.id.recordLow);
-            if(tv2 != null) tv2.setText(recordText);
-
-            // The user has a record
-            hasRecord = true;
+        if(randomlyGeneratedNumber < record) {
+            recordNumber = (TextView) findViewById(R.id.recordNumber);
+            if(recordNumber != null) recordNumber.setText(recordString);
+            record = randomlyGeneratedNumber;
+        }
+        else {
+            recordNumber = (TextView) findViewById(R.id.recordNumber);
+            if(recordNumber != null) recordNumber.setText(stashedRecordString);
         }
 
-        // "Do it again" button onClickListener
-        final Button button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        doItAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
+                // Execute this on click
                 emptyMethod();
             }
         });
     }
 
-    // Method that calls generateNumber
-    public void emptyMethod(){
+    public void emptyMethod() {
         generateNumber();
+    }
+
+    @Override
+    protected void onStop() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+
+        super.onStop();
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("stashedRecord", record);
+        editor.commit();
     }
 }
