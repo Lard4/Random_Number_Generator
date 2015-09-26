@@ -11,7 +11,8 @@ import java.util.Random;
 
 public class NumberActivity extends AppCompatActivity {
     public int stashedRecord;
-    int record;
+    public int record;
+    public boolean userHasRecord;
 
     public static final String SHARED_PREFS = "shared_preferences";
 
@@ -30,25 +31,34 @@ public class NumberActivity extends AppCompatActivity {
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         doItAgain = (Button) findViewById(R.id.doItAgain);
 
+        doItAgain.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Execute this on click
+                generateNumber();
+            }
+        });
+
         record = 1000000;
 
-        Integer sr = sharedPreferences.getInt("stashedRecord", stashedRecord);
+        stashedRecord = sharedPreferences.getInt("stashedRecord", 0);
 
-        record = sr;
+        userHasRecord = sharedPreferences.getBoolean("userHasRecord", false);
 
-        generateNumber();
+        if(userHasRecord == true) {
+            generateNumber();
+        }
+        else {
+            generateFirstNumber();
+        }
     }
 
-    public void generateNumber() {
-        int max;
-        int min;
+    public void generateFirstNumber() {
+        int min = 1;
+        int max = 1000000;
         int randomlyGeneratedNumber;
         String recordString;
         String randomlyGeneratedNumberString;
         String stashedRecordString;
-
-        min = 1;
-        max = 1000000;
 
         Random rand = new Random();
         randomlyGeneratedNumber = rand.nextInt(max - min + 1) + min;
@@ -65,33 +75,63 @@ public class NumberActivity extends AppCompatActivity {
         if(randomlyGeneratedNumber < record) {
             recordNumber = (TextView) findViewById(R.id.recordNumber);
             if(recordNumber != null) recordNumber.setText(recordString);
-            record = randomlyGeneratedNumber;
+            stashedRecord = randomlyGeneratedNumber;
+            savePrefs();
         }
         else {
             recordNumber = (TextView) findViewById(R.id.recordNumber);
             if(recordNumber != null) recordNumber.setText(stashedRecordString);
         }
-
-        doItAgain.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Execute this on click
-                emptyMethod();
-            }
-        });
     }
 
-    public void emptyMethod() {
-        generateNumber();
+    public void generateNumber() {
+        int min = 1;
+        int max = 1000000;
+        int randomlyGeneratedNumber;
+        String recordString;
+        String randomlyGeneratedNumberString;
+        String stashedRecordString;
+
+        Random rand = new Random();
+        randomlyGeneratedNumber = rand.nextInt(max - min + 1) + min;
+
+        randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
+
+        recordString = "Record: " + randomlyGeneratedNumber;
+
+        stashedRecordString = "Record: " + stashedRecord;
+
+        randomNumber = (TextView) findViewById(R.id.randomNumber);
+        if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
+
+        if(randomlyGeneratedNumber < stashedRecord) {
+            recordNumber = (TextView) findViewById(R.id.recordNumber);
+            if(recordNumber != null) recordNumber.setText(recordString);
+            stashedRecord = randomlyGeneratedNumber;
+            savePrefs();
+        }
+        else {
+            recordNumber = (TextView) findViewById(R.id.recordNumber);
+            if(recordNumber != null) recordNumber.setText(stashedRecordString);
+        }
+    }
+
+    public void savePrefs() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("stashedRecord", stashedRecord);
+        editor.putBoolean("userHasRecord", true);
+        editor.commit();
     }
 
     @Override
     protected void onStop() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("stashedRecord", stashedRecord);
+        editor.putBoolean("userHasRecord", true);
+        editor.commit();
 
         super.onStop();
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("stashedRecord", record);
-        editor.commit();
     }
 }
