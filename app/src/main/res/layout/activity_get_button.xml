@@ -19,9 +19,22 @@
         android:clickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:onClick="apply1"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/better_button_0"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/better_button_0"
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:paddingStart="@dimen/button_text_padding_left"
+        android:paddingEnd="@dimen/button_text_padding_right"
+        android:layout_above="@+id/better_button_1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp" />
 
 </RelativeLayout>
