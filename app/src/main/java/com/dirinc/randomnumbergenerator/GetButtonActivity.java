@@ -48,6 +48,7 @@ public class GetButtonActivity extends AppCompatActivity {
             isApply1 = true;
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
+            // There shall not be more than one that is tru
             editor.putBoolean("better_button0", isApply0);
             editor.putBoolean("better_button1", isApply1);
             editor.commit();
@@ -58,6 +59,7 @@ public class GetButtonActivity extends AppCompatActivity {
             isApply0 = true;
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
+            // There shall not be more than one that is tru
             editor.putBoolean("better_button0", isApply0);
             editor.putBoolean("better_button1", isApply1);
             editor.commit();

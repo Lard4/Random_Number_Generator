@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
+
 import java.util.Random;
 
 public class NumberActivity extends AppCompatActivity {
@@ -23,6 +25,8 @@ public class NumberActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        boolean isBetterButton0;
+        boolean isBetterButton1;
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
         super.onCreate(savedInstanceState);
@@ -40,6 +44,21 @@ public class NumberActivity extends AppCompatActivity {
         });
 
         stashedRecord = sharedPreferences.getInt("stashedRecord", maximumRandomNumber);
+
+        isBetterButton0 = sharedPreferences.getBoolean("better_button0", false);
+        isBetterButton1 = sharedPreferences.getBoolean("better_button1", false);
+
+        // Toasts to show user what button is in use
+            if(isBetterButton0) {
+                Toast.makeText(this, "You're using the standard button", Toast.LENGTH_SHORT).show();
+            }
+            else if(isBetterButton1) {
+                Toast.makeText(this, "You're using better button #1", Toast.LENGTH_SHORT).show();
+            }
+            // Only here for insurance
+            else {
+                Toast.makeText(this, "You're using the standard button", Toast.LENGTH_SHORT).show();
+            }
 
         decideGeneration();
     }
