@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.view.View;
 import java.util.Random;
 
-
 public class NumberActivity extends AppCompatActivity {
     public int stashedRecord;
     public int minimumRandomNumber = 1;
@@ -52,7 +51,7 @@ public class NumberActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         isApply0 = sharedPreferences.getBoolean("better_button0", false);
         isApply1 = sharedPreferences.getBoolean("better_button1", false);
-        
+
         if(isApply0) {
             generateNumber();
         }

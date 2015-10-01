@@ -21,8 +21,7 @@
         android:layout_centerHorizontal="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:onClick="onCreate"
-        />
+        android:onClick="onCreate" />
 
     <TextView style="@style/RandomNumber"
         android:id="@+id/randomNumber"

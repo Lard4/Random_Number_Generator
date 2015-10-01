@@ -24,8 +24,6 @@ public class GetButtonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_button);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-
         final Button better_button_1 = (Button) findViewById(R.id.better_button_1);
         final Button better_button_0 = (Button) findViewById(R.id.better_button_0);
 
@@ -65,7 +63,6 @@ public class GetButtonActivity extends AppCompatActivity {
             editor.commit();
 
             Toast.makeText(this, "Standard Button Applied!", Toast.LENGTH_SHORT).show();
-
         }
     }
 

@@ -50,5 +50,4 @@
                 android:value="com.dirinc.randomnumbergenerator.MainActivity" />
         </activity>
     </application>
-
 </manifest>

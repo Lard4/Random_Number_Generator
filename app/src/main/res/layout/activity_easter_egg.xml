@@ -15,7 +15,6 @@
         android:id="@+id/easter_shrug"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/easter_shrug"
-        />
+        android:src="@drawable/easter_shrug" />
 
 </RelativeLayout>

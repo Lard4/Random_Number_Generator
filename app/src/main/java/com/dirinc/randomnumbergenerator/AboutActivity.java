@@ -22,20 +22,21 @@ public class AboutActivity extends AppCompatActivity {
         // This is the AboutActivity, mmmmm?
         setContentView(R.layout.activity_about);
 
-        // Here is the "hidden" button that is the version number
+        // This is the "hidden" button that is the version number
         final Button button = (Button) findViewById(R.id.aboutversion);
-            // Can we get an onClickListener??
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // Perform action on click. Our action is to add 1 to the field clicked
-                    clicked ++;
-                    // When the user clicks the button 5 times...
-                     if (clicked == 5) {
-                            // Switch on over to the EasterEggActivity ¯\_(ツ)_/¯
-                            Intent activityChangeIntent = new Intent(AboutActivity.this, EasterEggActivity.class);
-                            AboutActivity.this.startActivity(activityChangeIntent);
-                     }
+
+        // Can we get an onClickListener??
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click. Our action is to add 1 to the field clicked
+                clicked ++;
+                // When the user clicks the button 5 times...
+                if (clicked == 5) {
+                    // Switch on over to the EasterEggActivity ¯\_(ツ)_/¯
+                    Intent activityChangeIntent = new Intent(AboutActivity.this, EasterEggActivity.class);
+                    AboutActivity.this.startActivity(activityChangeIntent);
                 }
-            });
+            }
+        });
     }
 }

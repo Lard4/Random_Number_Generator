@@ -1,5 +1,4 @@
 <resources>
-
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/primary_background</item>
     </style>
@@ -29,5 +28,4 @@
         <item name="android:textSize">@dimen/record_low</item>
         <item name="android:textStyle">normal</item>
     </style>
-
 </resources>
