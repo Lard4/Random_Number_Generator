@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_text"
         android:textColor="@color/button_text_color"
-        android:id="@+id/button"
+        android:id="@+id/number_button"
         android:background="@drawable/button"
         android:clickable="true"
         android:layout_centerVertical="true"
@@ -22,5 +22,20 @@
         android:paddingEnd="@dimen/button_text_padding_right"
         android:onClick="generateNumber"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_more"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/button_more"
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:paddingStart="@dimen/button_text_padding_left"
+        android:paddingEnd="@dimen/button_text_padding_right"
+        android:onClick="moreButtons"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/number_button"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
