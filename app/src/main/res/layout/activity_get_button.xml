@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/better_button_1"
         android:textColor="@color/button_text_color"
-        android:id="@+id/button1"
+        android:id="@+id/better_button_1"
         android:background="@drawable/button"
         android:clickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
