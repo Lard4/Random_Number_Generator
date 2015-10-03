@@ -28,4 +28,10 @@
         <item name="android:textSize">@dimen/record_low</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <style name="Odds" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/factoid</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>
