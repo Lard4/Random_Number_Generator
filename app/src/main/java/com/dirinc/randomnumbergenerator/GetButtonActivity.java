@@ -29,6 +29,7 @@ public class GetButtonActivity extends AppCompatActivity {
 
         better_button_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                isApply0 = false;
                 isApply1 = true;
                 setButton();
             }
