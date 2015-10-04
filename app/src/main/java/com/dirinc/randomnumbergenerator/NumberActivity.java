@@ -3,6 +3,7 @@ package com.dirinc.randomnumbergenerator;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
@@ -43,6 +44,7 @@ public class NumberActivity extends AppCompatActivity {
 
         doItAgain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 decideGeneration();
             }
         });
@@ -177,7 +179,7 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void makeOdds() {
-        float myOdds = 10 * 10;
+        float myOdds = odds;
         String string1 = "You have a total " + myOdds + "% chance";
         String string2 = "of getting lower than " + stashedRecord;
         String percentOddsString = string1 + string2;

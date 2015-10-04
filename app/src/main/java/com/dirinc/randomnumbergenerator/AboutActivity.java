@@ -23,10 +23,10 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
 
         // This is the "hidden" button that is the version number
-        final Button button = (Button) findViewById(R.id.aboutversion);
+        Button aboutVersion = (Button) findViewById(R.id.aboutVersion);
 
         // Can we get an onClickListener??
-        button.setOnClickListener(new View.OnClickListener() {
+        aboutVersion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click. Our action is to add 1 to the field clicked
                 clicked ++;

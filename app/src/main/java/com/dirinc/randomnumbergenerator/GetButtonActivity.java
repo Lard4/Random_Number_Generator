@@ -3,6 +3,7 @@ package com.dirinc.randomnumbergenerator;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,11 +25,12 @@ public class GetButtonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_button);
 
-        final Button better_button_1 = (Button) findViewById(R.id.better_button_1);
-        final Button better_button_0 = (Button) findViewById(R.id.better_button_0);
+        Button better_button_1 = (Button) findViewById(R.id.better_button_1);
+        Button better_button_0 = (Button) findViewById(R.id.better_button_0);
 
         better_button_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 isApply0 = false;
                 isApply1 = true;
                 setButton();
@@ -37,6 +39,7 @@ public class GetButtonActivity extends AppCompatActivity {
 
         better_button_0.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 isApply0 = true;
                 isApply1 = false;
                 setButton();
