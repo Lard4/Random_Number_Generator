@@ -16,12 +16,13 @@
         android:id="@+id/number_button"
         android:background="@drawable/button"
         android:clickable="true"
+        android:longClickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:onClick="decideGeneration"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="350dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:elevation="@dimen/button_elevation" />
 
     <Button
         android:layout_width="wrap_content"
@@ -33,9 +34,9 @@
         android:clickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:onClick="moreButtons"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp" />
+        android:layout_marginBottom="100dp"
+        android:elevation="@dimen/button_elevation" />
 
 </RelativeLayout>

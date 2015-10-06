@@ -1,15 +1,17 @@
 package com.dirinc.randomnumbergenerator;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class AboutActivity extends AppCompatActivity {
-
-    // Field for how many times the user clicked Version number
+    // Variable for how many times the user clicked Version number
     private int clicked;
+
+    private static final String SHARED_PREFS = "shared_preferences";
 
     public AboutActivity() {
         // Default is always 0 when the activity is launched for consistency
@@ -18,14 +20,12 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setColors();
         super.onCreate(savedInstanceState);
-        // This is the AboutActivity, mmmmm?
         setContentView(R.layout.activity_about);
-
         // This is the "hidden" button that is the version number
         Button aboutVersion = (Button) findViewById(R.id.aboutVersion);
 
-        // Can we get an onClickListener??
         aboutVersion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click. Our action is to add 1 to the field clicked
@@ -33,10 +33,54 @@ public class AboutActivity extends AppCompatActivity {
                 // When the user clicks the button 5 times...
                 if (clicked == 5) {
                     // Switch on over to the EasterEggActivity ¯\_(ツ)_/¯
-                    Intent activityChangeIntent = new Intent(AboutActivity.this, EasterEggActivity.class);
-                    AboutActivity.this.startActivity(activityChangeIntent);
+                    startEasterEggActivity();
                 }
             }
         });
+    }
+
+    public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        String unlockedColor = sharedPreferences.getString("color", "");
+
+        switch (unlockedColor) {
+            case "Purple":
+                setTheme(R.style.Purple);
+                break;
+            case "Blue":
+                setTheme(R.style.Blue);
+                break;
+            case "Teal":
+                setTheme(R.style.Teal);
+                break;
+            case "Yellow":
+                setTheme(R.style.Yellow);
+                break;
+            case "Orange":
+                setTheme(R.style.Orange);
+                break;
+            case "Red":
+                setTheme(R.style.Red);
+                break;
+            case "Pink":
+                setTheme(R.style.Pink);
+                break;
+            default:
+                setTheme(R.style.AppTheme);
+                break;
+        }
+    }
+
+    public void startEasterEggActivity() {
+        Intent changeActivities = new Intent(this, EasterEggActivity.class);
+        startActivity(changeActivities);
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        setColors();
+        super.onResume();
+        setContentView(R.layout.activity_main);
     }
 }

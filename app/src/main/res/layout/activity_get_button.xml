@@ -36,4 +36,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="54dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:text="@string/button_change_style"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/button_change_style"
+        android:paddingStart="@dimen/button_text_padding_left"
+        android:paddingEnd="@dimen/button_text_padding_right"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp" />
+
 </RelativeLayout>

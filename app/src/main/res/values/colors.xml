@@ -1,13 +1,35 @@
 <resources>
-    <color name="button_background">#ff6eae57</color>
-    <color name="button_background_pressed">#ff629b4d</color>
+    <color name="button_background">#16000000</color>
+    <color name="button_background_pressed">#32000000</color>
     <color name="button_text_color">@android:color/white</color>
 
     <color name="primary_background">#ff7bc261</color>
     <color name="primary_background_dark">@color/button_background</color>
+    <color name="transparent_background">#16000000</color>
 
     <color name="transparent">#00000000</color>
 
     <color name="status_bar_color">@color/primary_background_dark</color>
     <color name="navigation_bar_color">@color/primary_background_dark</color>
+
+    <color name="purple_primary_background">#FF9C27B0</color>
+    <color name="purple_navigation_bar_color">#FF7C1F8C</color>
+
+    <color name="blue_primary_background">#FF006699</color>
+    <color name="blue_navigation_bar_color">#FF00517A</color>
+
+    <color name="teal_primary_background">#FF009688</color>
+    <color name="teal_navigation_bar_color">#FF00786C</color>
+
+    <color name="yellow_primary_background">#FFFFEB3B</color>
+    <color name="yellow_navigation_bar_color">#FFCCBC2F</color>
+
+    <color name="orange_primary_background">#FFFF9800</color>
+    <color name="orange_navigation_bar_color">#FFCC7900</color>
+
+    <color name="red_primary_background">#FFF44336</color>
+    <color name="red_navigation_bar_color">#FFC3352B</color>
+
+    <color name="pink_primary_background">#FFE91E63</color>
+    <color name="pink_navigation_bar_color">#FFBA184F</color>
 </resources>

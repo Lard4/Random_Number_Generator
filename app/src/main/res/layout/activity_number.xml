@@ -19,7 +19,6 @@
         android:clickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:onClick="onCreate"
         android:layout_below="@+id/randomNumber"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp" />

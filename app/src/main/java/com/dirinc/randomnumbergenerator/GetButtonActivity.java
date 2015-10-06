@@ -1,5 +1,6 @@
 package com.dirinc.randomnumbergenerator;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 public class GetButtonActivity extends AppCompatActivity {
     private Boolean isApply1;
     private Boolean isApply0;
-    public String thisButton;
+    public String whichButton;
 
     public static final String SHARED_PREFS = "shared_preferences";
 
@@ -22,11 +23,14 @@ public class GetButtonActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setColors();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_button);
 
         Button better_button_1 = (Button) findViewById(R.id.better_button_1);
         Button better_button_0 = (Button) findViewById(R.id.better_button_0);
+        Button button_change_style = (Button) findViewById(R.id.button_change_style);
+
 
         better_button_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -43,6 +47,13 @@ public class GetButtonActivity extends AppCompatActivity {
                 isApply0 = true;
                 isApply1 = false;
                 setButton();
+            }
+        });
+
+        button_change_style.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                startColorChangingActivity();
             }
         });
     }
@@ -74,12 +85,57 @@ public class GetButtonActivity extends AppCompatActivity {
 
     public String getButton() {
         if(isApply1) {
-            thisButton = "isApply1";
-            return thisButton;
+            whichButton = "isApply1";
+            return whichButton;
         }
         else {
-            thisButton = "isApply0";
-            return thisButton;
+            whichButton = "isApply0";
+            return whichButton;
         }
+    }
+
+    public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        String unlockedColor = sharedPreferences.getString("color", "");
+
+        switch (unlockedColor) {
+            case "Purple":
+                setTheme(R.style.Purple);
+                break;
+            case "Blue":
+                setTheme(R.style.Blue);
+                break;
+            case "Teal":
+                setTheme(R.style.Teal);
+                break;
+            case "Yellow":
+                setTheme(R.style.Yellow);
+                break;
+            case "Orange":
+                setTheme(R.style.Orange);
+                break;
+            case "Red":
+                setTheme(R.style.Red);
+                break;
+            case "Pink":
+                setTheme(R.style.Pink);
+                break;
+            default:
+                setTheme(R.style.AppTheme);
+                break;
+        }
+    }
+
+    public void startColorChangingActivity() {
+        Intent changeActivities = new Intent(this, ColorChangingActivity.class);
+        startActivity(changeActivities);
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        setColors();
+        super.onResume();
+        setContentView(R.layout.activity_main);
     }
 }
