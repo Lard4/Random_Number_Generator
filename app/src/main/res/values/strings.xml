@@ -21,7 +21,7 @@
 
     <string name="about">This wonderful app was made by Kevin Dixson</string>
     <string name="about_line_2">Copyright 2015 - All rights reserved</string>
-    <string name="about_line_3">Version 1.1 - PreRelease</string>
+    <string name="about_line_3">Version 1.2 - PreRelease</string>
 
     <string name="title_activity_get_button">GetButtonActivity</string>
     <string name="title_activity_number">NumberActivity</string>
