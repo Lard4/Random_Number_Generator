@@ -16,7 +16,10 @@ public class MainActivity extends AppCompatActivity {
         setColors();
         super.onCreate(icicle);
         setContentView(R.layout.activity_main);
+        setButtons();
+    }
 
+    public void setButtons() {
         final Button number_button = (Button) findViewById(R.id.number_button);
         final Button button_more = (Button) findViewById(R.id.button_more);
 
@@ -88,5 +91,13 @@ public class MainActivity extends AppCompatActivity {
     public void startGetButtonActivity() {
         Intent changeActivities = new Intent(this, GetButtonActivity.class);
         startActivity(changeActivities);
+    }
+
+    @Override
+    protected void onResume() {
+        setColors();
+        super.onResume();
+        setContentView(R.layout.activity_main);
+        setButtons();
     }
 }

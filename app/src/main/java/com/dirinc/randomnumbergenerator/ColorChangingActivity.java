@@ -9,8 +9,33 @@ import android.widget.Button;
 
 public class ColorChangingActivity extends AppCompatActivity {
     private String unlockedColor;
+    private boolean unlockedPurple;
+    private boolean unlockedBlue;
+    private boolean unlockedTeal;
+    private boolean unlockedYellow;
+    private boolean unlockedOrange;
+    private boolean unlockedRed;
+    private boolean unlockedPink;
 
     public static final String SHARED_PREFS = "shared_preferences";
+
+    public ColorChangingActivity() {
+        NumberActivity purpleFinder = new NumberActivity();
+        NumberActivity blueFinder = new NumberActivity();
+        NumberActivity tealFinder = new NumberActivity();
+        NumberActivity yellowFinder = new NumberActivity();
+        NumberActivity orangeFinder = new NumberActivity();
+        NumberActivity redFinder = new NumberActivity();
+        NumberActivity pinkFinder = new NumberActivity();
+
+        unlockedPurple = purpleFinder.getPurple();
+        unlockedBlue = blueFinder.getBlue();
+        unlockedTeal = tealFinder.getTeal();
+        unlockedYellow = yellowFinder.getYellow();
+        unlockedOrange = orangeFinder.getOrange();
+        unlockedRed = redFinder.getRed();
+        unlockedPink = pinkFinder.getPink();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,75 +54,89 @@ public class ColorChangingActivity extends AppCompatActivity {
         Button red = (Button) findViewById(R.id.red);
         Button pink = (Button) findViewById(R.id.pink);
 
-        purple.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Purple";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedPurple) {
+            purple.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Purple";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
 
-        blue.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Blue";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedBlue) {
+            blue.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Blue";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
 
-        teal.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Teal";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedTeal) {
+            teal.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Teal";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
 
-        yellow.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Yellow";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedYellow) {
+            yellow.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Yellow";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
 
-        orange.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Orange";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedOrange) {
+            orange.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Orange";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
 
-        red.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Red";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedRed) {
+            red.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Red";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
 
-        pink.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Execute on click
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                unlockedColor = "Pink";
-                saveInfo();
-                setColors();
-            }
-        });
+        if(unlockedPink) {
+            pink.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Execute on click
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    unlockedColor = "Pink";
+                    saveInfo();
+                    setColors();
+                }
+            });
+        }
     }
 
     public void saveInfo() {
