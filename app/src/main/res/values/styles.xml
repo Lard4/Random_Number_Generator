@@ -2,6 +2,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/primary_background</item>
         <item name="android:statusBarColor">@color/button_background</item>
+        <item name="android:navigationBarColor">@color/primary_background_dark</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">

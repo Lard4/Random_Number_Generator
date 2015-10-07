@@ -76,11 +76,4 @@ public class AboutActivity extends AppCompatActivity {
         startActivity(changeActivities);
         finish();
     }
-
-    @Override
-    protected void onResume() {
-        setColors();
-        super.onResume();
-        setContentView(R.layout.activity_main);
-    }
 }

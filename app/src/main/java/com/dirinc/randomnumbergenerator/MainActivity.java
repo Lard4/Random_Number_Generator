@@ -78,25 +78,15 @@ public class MainActivity extends AppCompatActivity {
     public void startNumberActivity() {
         Intent changeActivities = new Intent(this, NumberActivity.class);
         startActivity(changeActivities);
-        finish();
     }
 
     public void startAboutActivity() {
         Intent changeActivities = new Intent(this, AboutActivity.class);
         startActivity(changeActivities);
-        finish();
     }
 
     public void startGetButtonActivity() {
         Intent changeActivities = new Intent(this, GetButtonActivity.class);
         startActivity(changeActivities);
-        finish();
-    }
-
-    @Override
-    protected void onResume() {
-        setColors();
-        super.onResume();
-        setContentView(R.layout.activity_main);
     }
 }

@@ -138,11 +138,4 @@ public class ColorChangingActivity extends AppCompatActivity {
                 break;
         }
     }
-
-    @Override
-    protected void onResume() {
-        setColors();
-        super.onResume();
-        setContentView(R.layout.activity_main);
-    }
 }

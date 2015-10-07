@@ -129,13 +129,5 @@ public class GetButtonActivity extends AppCompatActivity {
     public void startColorChangingActivity() {
         Intent changeActivities = new Intent(this, ColorChangingActivity.class);
         startActivity(changeActivities);
-        finish();
-    }
-
-    @Override
-    protected void onResume() {
-        setColors();
-        super.onResume();
-        setContentView(R.layout.activity_main);
     }
 }

@@ -276,25 +276,6 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("stashedRecord", stashedRecord);
-        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
-        editor.putString("color", unlockedColor);
-        editor.commit();
-
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        setColors();
-        super.onResume();
-        setContentView(R.layout.activity_main);
-    }
-
-    @Override
     protected void onStop() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
