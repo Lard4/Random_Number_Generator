@@ -12,9 +12,10 @@ import android.widget.Toast;
 public class GetButtonActivity extends AppCompatActivity {
     private Boolean isApply1;
     private Boolean isApply0;
-    public String whichButton;
+    private String whichButton;
 
-    public static final String SHARED_PREFS = "shared_preferences";
+    private static final String SHARED_PREFS = "shared_preferences";
+    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
     public GetButtonActivity() {
         isApply1 = false;
@@ -61,25 +62,23 @@ public class GetButtonActivity extends AppCompatActivity {
     public void setButton() {
         if(isApply1) {
             isApply1 = true;
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // There shall not be more than one that is tru
             editor.putBoolean("better_button0", isApply0);
             editor.putBoolean("better_button1", isApply1);
             editor.commit();
 
-            Toast.makeText(this, "Better Button 1 Applied!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Better Button 1 Applied!", Toast.LENGTH_SHORT).show();
         }
         else if(isApply0) {
             isApply0 = true;
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             // There shall not be more than one that is tru
             editor.putBoolean("better_button0", isApply0);
             editor.putBoolean("better_button1", isApply1);
             editor.commit();
 
-            Toast.makeText(this, "Standard Button Applied!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Standard Button Applied!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -95,7 +94,6 @@ public class GetButtonActivity extends AppCompatActivity {
     }
 
     public void setColors() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         String unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {

@@ -91,5 +91,4 @@
         <item name="android:statusBarColor">@color/button_background</item>
         <item name="android:navigationBarColor">@color/pink_navigation_bar_color</item>
     </style>
-
 </resources>

@@ -17,7 +17,8 @@ public class ColorChangingActivity extends AppCompatActivity {
     private boolean unlockedRed;
     private boolean unlockedPink;
 
-    public static final String SHARED_PREFS = "shared_preferences";
+    private static final String SHARED_PREFS = "shared_preferences";
+    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
     public ColorChangingActivity() {
         NumberActivity purpleFinder = new NumberActivity();
@@ -140,14 +141,12 @@ public class ColorChangingActivity extends AppCompatActivity {
     }
 
     public void saveInfo() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("color", unlockedColor);
         editor.commit();
     }
 
     public void setColors() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {

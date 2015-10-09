@@ -12,27 +12,28 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class NumberActivity extends AppCompatActivity {
-    public int stashedRecord;
+    private int stashedRecord;
     private int minimumRandomNumber = 1;
     private int maximumRandomNumber = 1000000;
     private int betterButtonOneCounter;
     private double odds;
     private String unlockedColor;
-    public boolean hasPurple;
-    public boolean hasBlue;
-    public boolean hasTeal;
-    public boolean hasYellow;
-    public boolean hasOrange;
-    public boolean hasRed;
-    public boolean hasPink;
 
+    private boolean hasPurple;
+    private boolean hasBlue;
+    private boolean hasTeal;
+    private boolean hasYellow;
+    private boolean hasOrange;
+    private boolean hasRed;
+    private boolean hasPink;
 
-    public static final String SHARED_PREFS = "shared_preferences";
+    private static final String SHARED_PREFS = "shared_preferences";
+    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
-    public TextView randomNumber;
-    public TextView recordNumber;
-    public TextView percentOdds;
-    public Button doItAgain;
+    private TextView randomNumber;
+    private TextView recordNumber;
+    private TextView percentOdds;
+    private Button doItAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,6 @@ public class NumberActivity extends AppCompatActivity {
     public void startNumberActivity() {
         boolean isBetterButton0;
         boolean isBetterButton1;
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
         randomNumber = (TextView) findViewById(R.id.randomNumber);
         recordNumber = (TextView) findViewById(R.id.recordNumber);
@@ -68,21 +68,20 @@ public class NumberActivity extends AppCompatActivity {
 
         // Toasts to show user what button is in use
         if(isBetterButton0) {
-            Toast.makeText(this, "You're using the standard button", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You're using the standard button", Toast.LENGTH_SHORT).show();
         }
         else if(isBetterButton1) {
-            Toast.makeText(this, "You're using better button #1", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You're using better button #1", Toast.LENGTH_SHORT).show();
         }
         // Only here for insurance
         else {
-            Toast.makeText(this, "You're using the standard button", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "You're using the standard button", Toast.LENGTH_SHORT).show();
         }
 
         decideGeneration();
     }
 
     public void decideGeneration() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         boolean isApply0;
         boolean isApply1;
 
@@ -149,8 +148,6 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void generateBetterNumber1() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-
         int randomlyGeneratedNumber;
         int betterMaximumRandomNumber = 500000;
 
@@ -174,7 +171,6 @@ public class NumberActivity extends AppCompatActivity {
 
         randomNumber = (TextView) findViewById(R.id.randomNumber);
         if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
-
 
         if(randomlyGeneratedNumber < stashedRecord) {
             recordNumber = (TextView) findViewById(R.id.recordNumber);
@@ -271,7 +267,6 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void setColors() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {
@@ -325,7 +320,6 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void saveInfo() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
@@ -335,7 +329,6 @@ public class NumberActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
