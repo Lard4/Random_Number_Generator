@@ -12,7 +12,6 @@ public class AboutActivity extends AppCompatActivity {
     private int clicked;
 
     private static final String SHARED_PREFS = "shared_preferences";
-    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
     public AboutActivity() {
         // Default is always 0 when the activity is launched for consistency
@@ -41,6 +40,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         String unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {

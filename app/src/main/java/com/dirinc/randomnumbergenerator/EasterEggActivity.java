@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 public class EasterEggActivity extends AppCompatActivity {
     private static final String SHARED_PREFS = "shared_preferences";
-    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +21,7 @@ public class EasterEggActivity extends AppCompatActivity {
     }
 
     public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         String unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {

@@ -28,7 +28,6 @@ public class NumberActivity extends AppCompatActivity {
     private boolean hasPink;
 
     private static final String SHARED_PREFS = "shared_preferences";
-    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
     private TextView randomNumber;
     private TextView recordNumber;
@@ -45,6 +44,8 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void startNumberActivity() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+
         boolean isBetterButton0;
         boolean isBetterButton1;
 
@@ -82,6 +83,8 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void decideGeneration() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+
         boolean isApply0;
         boolean isApply1;
 
@@ -148,6 +151,8 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void generateBetterNumber1() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+
         int randomlyGeneratedNumber;
         int betterMaximumRandomNumber = 500000;
 
@@ -267,6 +272,8 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+
         unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {
@@ -320,6 +327,7 @@ public class NumberActivity extends AppCompatActivity {
     }
 
     public void saveInfo() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
@@ -329,6 +337,7 @@ public class NumberActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);

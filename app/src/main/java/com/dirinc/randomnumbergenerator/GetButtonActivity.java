@@ -15,7 +15,6 @@ public class GetButtonActivity extends AppCompatActivity {
     private String whichButton;
 
     private static final String SHARED_PREFS = "shared_preferences";
-    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
     public GetButtonActivity() {
         isApply1 = false;
@@ -60,6 +59,7 @@ public class GetButtonActivity extends AppCompatActivity {
     }
 
     public void setButton() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         if(isApply1) {
             isApply1 = true;
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -94,6 +94,7 @@ public class GetButtonActivity extends AppCompatActivity {
     }
 
     public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         String unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {

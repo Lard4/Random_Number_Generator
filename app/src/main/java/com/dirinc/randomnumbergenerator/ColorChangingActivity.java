@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ColorChangingActivity extends AppCompatActivity {
     private String unlockedColor;
+    private String bestColor;
     private boolean unlockedPurple;
     private boolean unlockedBlue;
     private boolean unlockedTeal;
@@ -16,37 +18,80 @@ public class ColorChangingActivity extends AppCompatActivity {
     private boolean unlockedOrange;
     private boolean unlockedRed;
     private boolean unlockedPink;
+    private NumberActivity purpleFinder = new NumberActivity();
 
     private static final String SHARED_PREFS = "shared_preferences";
-    private final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-
-    public ColorChangingActivity() {
-        NumberActivity purpleFinder = new NumberActivity();
-        NumberActivity blueFinder = new NumberActivity();
-        NumberActivity tealFinder = new NumberActivity();
-        NumberActivity yellowFinder = new NumberActivity();
-        NumberActivity orangeFinder = new NumberActivity();
-        NumberActivity redFinder = new NumberActivity();
-        NumberActivity pinkFinder = new NumberActivity();
-
-        unlockedPurple = purpleFinder.getPurple();
-        unlockedBlue = blueFinder.getBlue();
-        unlockedTeal = tealFinder.getTeal();
-        unlockedYellow = yellowFinder.getYellow();
-        unlockedOrange = orangeFinder.getOrange();
-        unlockedRed = redFinder.getRed();
-        unlockedPink = pinkFinder.getPink();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setColors();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_changing);
+        hasTheseColors();
         buttons();
     }
 
+    public void hasTheseColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        unlockedColor = sharedPreferences.getString("color", "");
+
+        switch (unlockedColor) {
+            case "Purple":
+                unlockedPurple = true;
+                bestColor = "Purple";
+                break;
+            case "Blue":
+                unlockedPurple = true;
+                unlockedBlue = true;
+                bestColor = "Blue";
+                break;
+            case "Teal":
+                unlockedPurple = true;
+                unlockedBlue = true;
+                unlockedTeal = true;
+                bestColor = "Teal";
+                break;
+            case "Yellow":
+                unlockedPurple = true;
+                unlockedBlue = true;
+                unlockedTeal = true;
+                unlockedYellow = true;
+                bestColor = "Yellow";
+                break;
+            case "Orange":
+                unlockedPurple = true;
+                unlockedBlue = true;
+                unlockedTeal = true;
+                unlockedYellow = true;
+                unlockedOrange = true;
+                bestColor = "Orange";
+                break;
+            case "Red":
+                unlockedPurple = true;
+                unlockedBlue = true;
+                unlockedTeal = true;
+                unlockedYellow = true;
+                unlockedOrange = true;
+                unlockedRed = true;
+                bestColor = "Red";
+                break;
+            case "Pink":
+                unlockedPurple = true;
+                unlockedBlue = true;
+                unlockedTeal = true;
+                unlockedYellow = true;
+                unlockedOrange = true;
+                unlockedRed = true;
+                unlockedPink = true;
+                bestColor = "Pink";
+                break;
+        }
+    }
+
     public void buttons() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        unlockedColor = sharedPreferences.getString("bestColor", "");
+
         Button purple = (Button) findViewById(R.id.purple);
         Button blue = (Button) findViewById(R.id.blue);
         Button teal = (Button) findViewById(R.id.teal);
@@ -55,7 +100,7 @@ public class ColorChangingActivity extends AppCompatActivity {
         Button red = (Button) findViewById(R.id.red);
         Button pink = (Button) findViewById(R.id.pink);
 
-        if(unlockedPurple) {
+        if((unlockedPurple) || ((bestColor != null) && (bestColor.equals("Purple")))) {
             purple.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -63,11 +108,12 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Purple";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
 
-        if(unlockedBlue) {
+        if((unlockedBlue) || ((bestColor != null) && (bestColor.equals("Blue")))) {
             blue.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -75,11 +121,12 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Blue";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
 
-        if(unlockedTeal) {
+        if((unlockedTeal) || ((bestColor != null) && (bestColor.equals("Teal")))) {
             teal.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -87,11 +134,12 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Teal";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
 
-        if(unlockedYellow) {
+        if((unlockedYellow) || ((bestColor != null) && (bestColor.equals("Yellow")))) {
             yellow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -99,11 +147,12 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Yellow";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
 
-        if(unlockedOrange) {
+        if((unlockedOrange) || ((bestColor != null) && (bestColor.equals("Orange")))) {
             orange.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -111,11 +160,12 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Orange";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
 
-        if(unlockedRed) {
+        if((unlockedRed) || ((bestColor != null) && (bestColor.equals("Red")))) {
             red.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -123,11 +173,12 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Red";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
 
-        if(unlockedPink) {
+        if((unlockedPink) || ((bestColor != null) && (bestColor.equals("Pink")))) {
             pink.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Execute on click
@@ -135,18 +186,22 @@ public class ColorChangingActivity extends AppCompatActivity {
                     unlockedColor = "Pink";
                     saveInfo();
                     setColors();
+                    setContentView(R.layout.activity_color_changing);
                 }
             });
         }
     }
 
     public void saveInfo() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("color", unlockedColor);
+        editor.putString("bestColor", bestColor);
         editor.commit();
     }
 
     public void setColors() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {
