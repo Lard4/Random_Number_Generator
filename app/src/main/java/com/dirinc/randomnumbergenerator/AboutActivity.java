@@ -8,31 +8,23 @@ import android.view.View;
 import android.widget.Button;
 
 public class AboutActivity extends AppCompatActivity {
-    // Variable for how many times the user clicked Version number
-    private int clicked;
-
+    private int counter;
     private static final String SHARED_PREFS = "shared_preferences";
-
-    public AboutActivity() {
-        // Default is always 0 when the activity is launched for consistency
-        clicked = 0;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setColors();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        // This is the "hidden" button that is the version number
-        Button aboutVersion = (Button) findViewById(R.id.aboutVersion);
+        counter = 0;
+
+        final Button aboutVersion = (Button) findViewById(R.id.aboutVersion); // 'Hidden' button
 
         aboutVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                // Perform action on click. Our action is to add 1 to the field clicked
-                clicked ++;
-                // When the user clicks the button 5 times...
-                if (clicked == 5) {
-                    // Switch on over to the EasterEggActivity ¯\_(ツ)_/¯
+                counter ++;
+                if (counter == 5) {
                     startEasterEggActivity();
                 }
             }

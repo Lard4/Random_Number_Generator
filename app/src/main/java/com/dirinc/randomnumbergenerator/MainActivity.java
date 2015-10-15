@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         final Button button_more = (Button) findViewById(R.id.button_more);
 
         number_button.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 startNumberActivity();
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         number_button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
             public boolean onLongClick(View v) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 startAboutActivity();
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         button_more.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 startGetButtonActivity();

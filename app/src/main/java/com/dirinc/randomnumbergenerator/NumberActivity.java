@@ -18,28 +18,17 @@ public class NumberActivity extends AppCompatActivity {
     private int betterButtonOneCounter;
     private double odds;
     private String unlockedColor;
-
-    private boolean hasPurple;
-    private boolean hasBlue;
-    private boolean hasTeal;
-    private boolean hasYellow;
-    private boolean hasOrange;
-    private boolean hasRed;
-    private boolean hasPink;
-
-    private static final String SHARED_PREFS = "shared_preferences";
-
     private TextView randomNumber;
     private TextView recordNumber;
     private TextView percentOdds;
     private Button doItAgain;
+    private static final String SHARED_PREFS = "shared_preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setColors();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number);
-
         startNumberActivity();
     }
 
@@ -55,6 +44,7 @@ public class NumberActivity extends AppCompatActivity {
         doItAgain = (Button) findViewById(R.id.doItAgain);
 
         doItAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 decideGeneration();
@@ -78,7 +68,6 @@ public class NumberActivity extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "You're using the standard button", Toast.LENGTH_SHORT).show();
         }
-
         decideGeneration();
     }
 
@@ -203,77 +192,47 @@ public class NumberActivity extends AppCompatActivity {
         if (percentOdds != null) percentOdds.setText(percentOddsString);
     }
 
-    public String decideColor() {
+    public void decideColor() {
         if ((stashedRecord <= 10000) && (stashedRecord > 5000)) {
             unlockedColor = "Purple";
-            hasPurple = true;
             setTheme(R.style.Purple);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 5000) && (stashedRecord > 2500)) {
             unlockedColor = "Blue";
-            hasPurple = true;
-            hasBlue = true;
             setTheme(R.style.Blue);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 2500) && (stashedRecord > 750)) {
             unlockedColor = "Teal";
-            hasPurple = true;
-            hasBlue = true;
-            hasTeal = true;
             setTheme(R.style.Teal);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 750) && (stashedRecord > 100)) {
             unlockedColor = "Yellow";
-            hasPurple = true;
-            hasBlue = true;
-            hasTeal = true;
-            hasYellow = true;
             setTheme(R.style.Yellow);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 100) && (stashedRecord > 50)) {
             unlockedColor = "Orange";
-            hasPurple = true;
-            hasBlue = true;
-            hasTeal = true;
-            hasYellow = true;
-            hasOrange = true;
             setTheme(R.style.Orange);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 50) && (stashedRecord > 1)) {
             unlockedColor = "Red";
-            hasPurple = true;
-            hasBlue = true;
-            hasTeal = true;
-            hasYellow = true;
-            hasOrange = true;
-            hasRed = true;
             setTheme(R.style.Red);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if (stashedRecord == 1) {
             unlockedColor = "Pink";
-            hasPurple = true;
-            hasBlue = true;
-            hasTeal = true;
-            hasYellow = true;
-            hasOrange = true;
-            hasRed = true;
-            hasPink = true;
             setTheme(R.style.Pink);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         }
-        return unlockedColor;
     }
 
     public void setColors() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-
         unlockedColor = sharedPreferences.getString("color", "");
 
         switch (unlockedColor) {
@@ -302,28 +261,6 @@ public class NumberActivity extends AppCompatActivity {
                 setTheme(R.style.AppTheme);
                 break;
         }
-    }
-
-    public boolean getPurple() {
-        return hasPurple;
-    }
-    public boolean getBlue() {
-        return hasBlue;
-    }
-    public boolean getTeal() {
-        return hasTeal;
-    }
-    public boolean getYellow() {
-        return hasYellow;
-    }
-    public boolean getOrange() {
-        return hasOrange;
-    }
-    public boolean getRed() {
-        return hasRed;
-    }
-    public boolean getPink() {
-        return hasPink;
     }
 
     public void saveInfo() {

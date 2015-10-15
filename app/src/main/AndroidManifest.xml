@@ -49,14 +49,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.randomnumbergenerator.MainActivity" />
         </activity>
-        <activity
-            android:name=".ColorChangingActivity"
-            android:label="@string/title_activity_color_changing"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dirinc.randomnumbergenerator.MainActivity" />
-        </activity>
-    </application>
 
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="8.1.18"/>
+    </application>
 </manifest>

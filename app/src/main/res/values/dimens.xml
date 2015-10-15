@@ -9,6 +9,7 @@
     <dimen name="record_low">30sp</dimen>
     <dimen name="odds">16sp</dimen>
     <dimen name="new_color_unlock">24sp</dimen>
+    <dimen name="dialogTitle">32sp</dimen>
 
     <dimen name="about_text">40sp</dimen>
     <dimen name="about_text_version">20sp</dimen>

@@ -1,6 +1,5 @@
 package com.dirinc.randomnumbergenerator;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,14 +11,7 @@ import android.widget.Toast;
 public class GetButtonActivity extends AppCompatActivity {
     private Boolean isApply1;
     private Boolean isApply0;
-    private String whichButton;
-
     private static final String SHARED_PREFS = "shared_preferences";
-
-    public GetButtonActivity() {
-        isApply1 = false;
-        isApply0 = false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +19,11 @@ public class GetButtonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_button);
 
-        Button better_button_1 = (Button) findViewById(R.id.better_button_1);
-        Button better_button_0 = (Button) findViewById(R.id.better_button_0);
-        Button button_change_style = (Button) findViewById(R.id.button_change_style);
+        isApply1 = false;
+        isApply0 = false;
 
+        final Button better_button_1 = (Button) findViewById(R.id.better_button_1);
+        final Button better_button_0 = (Button) findViewById(R.id.better_button_0);
 
         better_button_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -47,13 +40,6 @@ public class GetButtonActivity extends AppCompatActivity {
                 isApply0 = true;
                 isApply1 = false;
                 setButton();
-            }
-        });
-
-        button_change_style.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                startColorChangingActivity();
             }
         });
     }
@@ -83,6 +69,7 @@ public class GetButtonActivity extends AppCompatActivity {
     }
 
     public String getButton() {
+        String whichButton;
         if(isApply1) {
             whichButton = "isApply1";
             return whichButton;
@@ -123,10 +110,5 @@ public class GetButtonActivity extends AppCompatActivity {
                 setTheme(R.style.AppTheme);
                 break;
         }
-    }
-
-    public void startColorChangingActivity() {
-        Intent changeActivities = new Intent(this, ColorChangingActivity.class);
-        startActivity(changeActivities);
     }
 }
