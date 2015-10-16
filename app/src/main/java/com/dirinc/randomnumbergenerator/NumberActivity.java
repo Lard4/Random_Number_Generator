@@ -22,6 +22,7 @@ public class NumberActivity extends AppCompatActivity {
     private TextView recordNumber;
     private TextView percentOdds;
     private Button doItAgain;
+    private GoogleApiClient mGoogleApiClient;
     private static final String SHARED_PREFS = "shared_preferences";
 
     @Override
@@ -126,6 +127,7 @@ public class NumberActivity extends AppCompatActivity {
             if(recordNumber != null) recordNumber.setText(recordString);
             stashedRecord = randomlyGeneratedNumber;
             saveInfo();
+            // TODO: Save google play games leaderboard
             decideColor();
 
             odds = stashedRecord / 1000000.0;
@@ -171,6 +173,7 @@ public class NumberActivity extends AppCompatActivity {
             if(recordNumber != null) recordNumber.setText(recordString);
             stashedRecord = randomlyGeneratedNumber;
             saveInfo();
+            // TODO: Save google play games leaderboard
             decideColor();
 
             odds = stashedRecord / 500000.0;
