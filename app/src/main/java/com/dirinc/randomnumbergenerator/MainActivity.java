@@ -1,15 +1,17 @@
 package com.dirinc.randomnumbergenerator;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private static final String SHARED_PREFS = "shared_preferences";
+    // TODO: Sign into Google Play Games
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -23,11 +25,16 @@ public class MainActivity extends AppCompatActivity {
         final Button number_button = (Button) findViewById(R.id.number_button);
         final Button button_more = (Button) findViewById(R.id.button_more);
 
-        number_button.setOnClickListener(new View.OnClickListener() {
+        number_button.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
-            public void onClick(View v) {
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                startNumberActivity();
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    startNumberActivity();
+                    return true;
+                }
+                return false;
             }
         });
 

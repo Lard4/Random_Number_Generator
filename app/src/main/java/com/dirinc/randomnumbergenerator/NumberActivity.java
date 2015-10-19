@@ -14,7 +14,6 @@ import java.util.Random;
 public class NumberActivity extends AppCompatActivity {
     private int stashedRecord;
     private int minimumRandomNumber = 1;
-    private int maximumRandomNumber = 1000000;
     private int betterButtonOneCounter;
     private double odds;
     private String unlockedColor;
@@ -22,7 +21,6 @@ public class NumberActivity extends AppCompatActivity {
     private TextView recordNumber;
     private TextView percentOdds;
     private Button doItAgain;
-    private GoogleApiClient mGoogleApiClient;
     private static final String SHARED_PREFS = "shared_preferences";
 
     @Override
@@ -52,7 +50,7 @@ public class NumberActivity extends AppCompatActivity {
             }
         });
 
-        stashedRecord = sharedPreferences.getInt("stashedRecord", maximumRandomNumber);
+        stashedRecord = sharedPreferences.getInt("stashedRecord", 1000000);
         betterButtonOneCounter = sharedPreferences.getInt("stashedBetterButtonOneCounter", 0);
 
         isBetterButton0 = sharedPreferences.getBoolean("better_button0", false);
@@ -85,7 +83,7 @@ public class NumberActivity extends AppCompatActivity {
             editor.putInt("stashedBetterButtonOneCounter", 0);
             editor.commit();
 
-            Toast.makeText(this, "Better Button 1 has ran out of clicks!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Better Button 1 has ran out of clicks!", Toast.LENGTH_SHORT).show();
             betterButtonOneCounter = 0;
         }
 
@@ -106,85 +104,48 @@ public class NumberActivity extends AppCompatActivity {
 
     public void generateNumber() {
         int randomlyGeneratedNumber;
-        String recordString;
-        String randomlyGeneratedNumberString;
-        String stashedRecordString;
+        int maximumRandomNumber = 1000000;
 
         Random rand = new Random();
         randomlyGeneratedNumber = rand.nextInt(maximumRandomNumber - minimumRandomNumber + 1) + minimumRandomNumber;
 
-        randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
-
-        recordString = "Record: " + randomlyGeneratedNumber;
-
-        stashedRecordString = "Record: " + stashedRecord;
+        // Late declaration because above statement initializes randomlyGeneratedNumber
+        String randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
 
         randomNumber = (TextView) findViewById(R.id.randomNumber);
         if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
 
         if(randomlyGeneratedNumber < stashedRecord) {
-            recordNumber = (TextView) findViewById(R.id.recordNumber);
-            if(recordNumber != null) recordNumber.setText(recordString);
-            stashedRecord = randomlyGeneratedNumber;
-            saveInfo();
-            // TODO: Save google play games leaderboard
-            decideColor();
-
-            odds = stashedRecord / 1000000.0;
-            makeOdds();
-        }
-        else {
-            recordNumber = (TextView) findViewById(R.id.recordNumber);
-            if(recordNumber != null) recordNumber.setText(stashedRecordString);
-            odds = stashedRecord / 1000000.0;
-            makeOdds();
+            setRecord(randomlyGeneratedNumber, maximumRandomNumber);
+        } else {
+            refreshRecord(maximumRandomNumber);
         }
     }
 
     public void generateBetterNumber1() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-
         int randomlyGeneratedNumber;
-        int betterMaximumRandomNumber = 500000;
-
-        String recordString;
-        String randomlyGeneratedNumberString;
-        String stashedRecordString;
-
-        betterButtonOneCounter++;
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
-        editor.commit();
+        int maximumRandomNumber = 500000;
 
         Random rand = new Random();
-        randomlyGeneratedNumber = rand.nextInt(betterMaximumRandomNumber - minimumRandomNumber + 1) + minimumRandomNumber;
+        randomlyGeneratedNumber = rand.nextInt(maximumRandomNumber - minimumRandomNumber + 1) + minimumRandomNumber;
 
-        randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
-
-        recordString = "Record: " + randomlyGeneratedNumber;
-
-        stashedRecordString = "Record: " + stashedRecord;
+        // Late declaration because above statement initializes randomlyGeneratedNumber
+        String randomlyGeneratedNumberString = "" + randomlyGeneratedNumber;
 
         randomNumber = (TextView) findViewById(R.id.randomNumber);
         if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
 
         if(randomlyGeneratedNumber < stashedRecord) {
-            recordNumber = (TextView) findViewById(R.id.recordNumber);
-            if(recordNumber != null) recordNumber.setText(recordString);
-            stashedRecord = randomlyGeneratedNumber;
-            saveInfo();
-            // TODO: Save google play games leaderboard
-            decideColor();
+            setRecord(randomlyGeneratedNumber, maximumRandomNumber);
+        } else {
+            refreshRecord(maximumRandomNumber);
+        }
 
-            odds = stashedRecord / 500000.0;
-            makeOdds();
-        }
-        else {
-            recordNumber = (TextView) findViewById(R.id.recordNumber);
-            if(recordNumber != null) recordNumber.setText(stashedRecordString);
-            odds = stashedRecord / 500000.0;
-            makeOdds();
-        }
+        betterButtonOneCounter++;
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
+        editor.commit();
     }
 
     public void makeOdds() {
@@ -232,6 +193,31 @@ public class NumberActivity extends AppCompatActivity {
             setContentView(R.layout.activity_number);
             startNumberActivity();
         }
+    }
+
+    public void setRecord(int r, int max) { // IF FROM GENERATENUMBER__();
+        String recordString = "Record: " + r;
+
+        recordNumber = (TextView) findViewById(R.id.recordNumber);
+        if(recordNumber != null) recordNumber.setText(recordString);
+        stashedRecord = r;
+
+        saveInfo();
+            // TODO: Save google play games leader board
+        decideColor();
+
+        odds = stashedRecord / max;
+        makeOdds();
+    }
+
+    public void refreshRecord(int max) { // ELSE FROM GENERATENUMBER__();
+        String stashedRecordString =  "Record: " + stashedRecord;
+
+        recordNumber = (TextView) findViewById(R.id.recordNumber);
+        if(recordNumber != null) recordNumber.setText(stashedRecordString);
+
+        odds = stashedRecord / max;
+        makeOdds();
     }
 
     public void setColors() {
