@@ -15,7 +15,6 @@ public class NumberActivity extends AppCompatActivity {
     private int stashedRecord;
     private int minimumRandomNumber = 1;
     private int betterButtonOneCounter;
-    private double odds;
     private String unlockedColor;
     private TextView randomNumber;
     private TextView recordNumber;
@@ -117,9 +116,10 @@ public class NumberActivity extends AppCompatActivity {
         if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
 
         if(randomlyGeneratedNumber < stashedRecord) {
-            setRecord(randomlyGeneratedNumber, maximumRandomNumber);
+            setRecord(randomlyGeneratedNumber);
+            makeOdds(randomlyGeneratedNumber, maximumRandomNumber);
         } else {
-            refreshRecord(maximumRandomNumber);
+            refreshRecord();
         }
     }
 
@@ -137,9 +137,10 @@ public class NumberActivity extends AppCompatActivity {
         if(randomNumber != null) randomNumber.setText(randomlyGeneratedNumberString);
 
         if(randomlyGeneratedNumber < stashedRecord) {
-            setRecord(randomlyGeneratedNumber, maximumRandomNumber);
+            setRecord(randomlyGeneratedNumber);
+            makeOdds(randomlyGeneratedNumber, maximumRandomNumber);
         } else {
-            refreshRecord(maximumRandomNumber);
+            refreshRecord();
         }
 
         betterButtonOneCounter++;
@@ -147,14 +148,6 @@ public class NumberActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
         editor.commit();
-    }
-
-    public void makeOdds() {
-        double myOdds = odds * 10.0;
-        String percentOddsString = "You have a total " + myOdds +
-                "% chance of getting lower than " + stashedRecord;
-        percentOdds = (TextView) findViewById(R.id.percentOdds);
-        if (percentOdds != null) percentOdds.setText(percentOddsString);
     }
 
     public void decideColor() {
@@ -196,7 +189,16 @@ public class NumberActivity extends AppCompatActivity {
         }
     }
 
-    public void setRecord(int r, int max) { // IF FROM GENERATENUMBER__();
+    public void makeOdds(int r, int max) {
+        double odds = ((double)r / (double)max) * 10.0;
+        String percentOddsString = "You have a total " + odds +
+                "% chance of getting lower than " + r;
+
+        percentOdds = (TextView) findViewById(R.id.percentOdds);
+        if (percentOdds != null) percentOdds.setText(percentOddsString);
+    }
+
+    public void setRecord(int r) { // IF FROM GENERATENUMBER__();
         String recordString = "Record: " + r;
 
         recordNumber = (TextView) findViewById(R.id.recordNumber);
@@ -206,19 +208,13 @@ public class NumberActivity extends AppCompatActivity {
         saveInfo();
             // TODO: Save google play games leader board
         decideColor();
-
-        odds = stashedRecord / max;
-        makeOdds();
     }
 
-    public void refreshRecord(int max) { // ELSE FROM GENERATENUMBER__();
+    public void refreshRecord() { // ELSE FROM GENERATENUMBER__();
         String stashedRecordString =  "Record: " + stashedRecord;
 
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         if(recordNumber != null) recordNumber.setText(stashedRecordString);
-
-        odds = stashedRecord / max;
-        makeOdds();
     }
 
     public void setColors() {

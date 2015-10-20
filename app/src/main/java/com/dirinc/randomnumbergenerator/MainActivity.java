@@ -40,13 +40,6 @@ public class MainActivity extends Activity
         setButtons();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-        setButtons();
-    }
-
     public void setButtons() {
         final Button number_button = (Button) findViewById(R.id.number_button);
         final Button button_more = (Button) findViewById(R.id.button_more);
