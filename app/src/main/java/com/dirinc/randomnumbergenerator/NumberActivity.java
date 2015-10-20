@@ -28,6 +28,7 @@ public class NumberActivity extends AppCompatActivity {
         setColors();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number);
+
         startNumberActivity();
     }
 

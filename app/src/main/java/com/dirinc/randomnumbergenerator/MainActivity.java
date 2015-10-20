@@ -8,16 +8,42 @@ import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class MainActivity extends Activity {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.games.Games;
+
+public class MainActivity extends Activity
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
     private static final String SHARED_PREFS = "shared_preferences";
-    // TODO: Sign into Google Play Games
+
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle icicle) {
         setColors();
         super.onCreate(icicle);
         setContentView(R.layout.activity_main);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API) .addScope(new Scope(Scopes.PROFILE))
+                .build();
+
+        mGoogleApiClient.connect();
+
+        setButtons();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
         setButtons();
     }
 
@@ -109,5 +135,21 @@ public class MainActivity extends Activity {
         super.onResume();
         setContentView(R.layout.activity_main);
         setButtons();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Toast.makeText(getApplicationContext(), "Connected to Google Play Games", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(getApplicationContext(), "Connection suspended", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(getApplicationContext(), "Connection to Google Play Games failed!", Toast.LENGTH_SHORT).show();
+        mGoogleApiClient.connect();
     }
 }
