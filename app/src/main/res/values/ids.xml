@@ -1,13 +1,4 @@
 <resources>
     <string name="app_id">905543475140</string>
-
     <string name="package_name">com.dirinc.randomnumbergenerator</string>
-
-    <string name="leaderboard_LEADERBOARD">CgkIxL_jtK0aEAIQBg</string>
-    
-    <string name="achievement_BORED">CgkIxL_jtK0aEAIQAQ</string>
-    <string name="achievement_REALLYBORED">CgkIxL_jtK0aEAIQAg</string>
-    <string name="achievement_PURPLEY">CgkIxL_jtK0aEAIQAw</string>
-    <string name="achievement_HALFWAYTHERE">CgkIxL_jtK0aEAIQBA</string>
-    <string name="achievement_MLGNUMBERGENERATOR">CgkIxL_jtK0aEAIQBQ</string>
 </resources>
