@@ -198,7 +198,7 @@ public class NumberActivity extends AppCompatActivity {
         if (percentOdds != null) percentOdds.setText(percentOddsString);
     }
 
-    public void setRecord(int r) { // IF FROM GENERATENUMBER__();
+    public void setRecord(int r) { // IF FROM GENERATENUMBER__()
         String recordString = "Record: " + r;
 
         recordNumber = (TextView) findViewById(R.id.recordNumber);
@@ -210,7 +210,7 @@ public class NumberActivity extends AppCompatActivity {
         decideColor();
     }
 
-    public void refreshRecord() { // ELSE FROM GENERATENUMBER__();
+    public void refreshRecord() { // ELSE FROM GENERATENUMBER__()
         String stashedRecordString =  "Record: " + stashedRecord;
 
         recordNumber = (TextView) findViewById(R.id.recordNumber);
