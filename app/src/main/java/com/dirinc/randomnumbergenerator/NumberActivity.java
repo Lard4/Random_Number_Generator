@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.*;
 import com.google.android.gms.games.*;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class NumberActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -55,7 +56,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .addApiIfAvailable(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
         signIn();
 
@@ -72,12 +73,30 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         percentOdds = (TextView) findViewById(R.id.percentOdds);
         Button doItAgain = (Button) findViewById(R.id.doItAgain);
+        Button leaderboards = (Button) findViewById(R.id.leaderboards);
+        Button back = (Button) findViewById(R.id.back);
 
         doItAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 decideGeneration();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                decideGeneration();
+            }
+        });
+
+        leaderboards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                showLeaderboards(0);
             }
         });
 
@@ -187,32 +206,32 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void decideColor() {
-        if ((stashedRecord <= 10000) && (stashedRecord > 5000)) {
+        if ((stashedRecord <= 10000) && (stashedRecord > 5000) && (!Objects.equals(unlockedColor, "Purple"))) {
             unlockedColor = "Purple";
             setTheme(R.style.Purple);
             setContentView(R.layout.activity_number);
             startNumberActivity();
-        } else if ((stashedRecord <= 5000) && (stashedRecord > 2500)) {
+        } else if ((stashedRecord <= 5000) && (stashedRecord > 2500) && (!Objects.equals(unlockedColor, "Blue"))) {
             unlockedColor = "Blue";
             setTheme(R.style.Blue);
             setContentView(R.layout.activity_number);
             startNumberActivity();
-        } else if ((stashedRecord <= 2500) && (stashedRecord > 750)) {
+        } else if ((stashedRecord <= 2500) && (stashedRecord > 750) && (!Objects.equals(unlockedColor, "Teal"))) {
             unlockedColor = "Teal";
             setTheme(R.style.Teal);
             setContentView(R.layout.activity_number);
             startNumberActivity();
-        } else if ((stashedRecord <= 750) && (stashedRecord > 100)) {
+        } else if ((stashedRecord <= 750) && (stashedRecord > 100) && (!Objects.equals(unlockedColor, "Yellow"))) {
             unlockedColor = "Yellow";
             setTheme(R.style.Yellow);
             setContentView(R.layout.activity_number);
             startNumberActivity();
-        } else if ((stashedRecord <= 100) && (stashedRecord > 50)) {
+        } else if ((stashedRecord <= 100) && (stashedRecord > 50) && (!Objects.equals(unlockedColor, "Orange"))) {
             unlockedColor = "Orange";
             setTheme(R.style.Orange);
             setContentView(R.layout.activity_number);
             startNumberActivity();
-        } else if ((stashedRecord <= 50) && (stashedRecord > 1)) {
+        } else if ((stashedRecord <= 50) && (stashedRecord > 1) && (!Objects.equals(unlockedColor, "Red"))) {
             unlockedColor = "Red";
             setTheme(R.style.Red);
             setContentView(R.layout.activity_number);
@@ -241,10 +260,12 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         if(recordNumber != null) recordNumber.setText(recordString);
 
         saveInfo();
-        if(stashedRecord < 10000) updateLeaderboard(b);
+        updateLeaderboard(b);
         decideColor();
+
         if((unlockedColor.equals("Purple") && (firstTimePurpley))) achievementsPurpley();
         if((unlockedColor.equals("Yellow") && (firstTimeYellow))) achievementsHalfway();
+        if(stashedRecord == 1) achievementsMLG();
     }
 
     public void refreshRecord() { // ELSE FROM GENERATENUMBER__()
@@ -292,20 +313,17 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             if (b == 0) {
                 Log.d("LEADERBOARD", "Updating leaderboard: Standard Button");
                 Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_STANDARDBUTTON), stashedRecord);
-                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                        getString(R.string.leaderboard_STANDARDBUTTON)), RC_UNUSED);
+                showLeaderboards(1);
             } else if (b == 1) {
                 Log.d("LEADERBOARD", "Updating leaderboard: Better Button");
                 Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_BETTERBUTTON), stashedRecord);
-                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                        getString(R.string.leaderboard_BETTERBUTTON)), RC_UNUSED);
+                showLeaderboards(2);
             }
         } else {
             BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            while (!isSignedIn()) {
-                Log.d("GPS", "In loop of not signed in! Waiting for connection.");
-            }
-            updateLeaderboard(b);
+            // TODO: Auto-sign in to GPS
+            Log.d("GPS", "Google play services failed to connect on Leaderboard. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
 
@@ -318,10 +336,9 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
                     RC_UNUSED);
         } else {
             BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            while (!isSignedIn()) {
-                Log.d("GPS", "In loop of not signed in! Waiting for connection.");
-            }
-            achievementsPurpley();
+            // TODO: Auto-sign in to GPS
+            Log.d("GPS", "Google play services failed to connect on Purple Achievement. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
 
@@ -334,10 +351,40 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
                     RC_UNUSED);
         } else {
             BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            while (!isSignedIn()) {
-                Log.d("GPS", "In loop of not signed in! Waiting for connection.");
-            }
-            achievementsHalfway();
+            // TODO: Auto-sign in to GPS
+            Log.d("GPS", "Google play services failed to connect on Halfway Achievement. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void achievementsMLG() {
+        Log.d("FUNCTIONALITY", "Updating Achievement: MLG SHIT");
+        if (isSignedIn()) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_MLGNUMBERGENERATOR));
+            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                    RC_UNUSED);
+        } else {
+            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
+            // TODO: Auto-sign in to GPS
+            Log.d("GPS", "Google play services failed to connect on MLG Achievement. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void showLeaderboards(int x) {
+        switch (x) {
+            case 0:
+                startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
+                        RC_UNUSED);
+                break;
+            case 1:
+                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                        getString(R.string.leaderboard_STANDARDBUTTON)), RC_UNUSED);
+                break;
+            case 2:
+                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                        getString(R.string.leaderboard_BETTERBUTTON)), RC_UNUSED);
+                break;
         }
     }
 

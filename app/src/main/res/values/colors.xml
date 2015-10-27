@@ -6,6 +6,7 @@
     <color name="primary_background">#FF7BC261</color>
     <color name="primary_background_dark">#FF629B4D</color>
     <color name="transparent_background">#16000000</color>
+    <color name="tinter">@color/transparent_background</color>
 
     <color name="transparent">#00000000</color>
 

@@ -3,8 +3,11 @@ package com.dirinc.randomnumbergenerator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,7 +20,7 @@ import com.google.example.games.basegameutils.*;
 
 public class MainActivity extends Activity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener, View.OnLongClickListener {
+        View.OnTouchListener, View.OnLongClickListener {
 
     private static final String SHARED_PREFS = "shared_preferences";
 
@@ -37,7 +40,7 @@ public class MainActivity extends Activity
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .addApiIfAvailable(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
         signIn();
         initializeButtons();
@@ -45,32 +48,41 @@ public class MainActivity extends Activity
 
     public void initializeButtons() {
         Button number_button = (Button) findViewById(R.id.number_button);
-        number_button.setOnClickListener(this);
+        number_button.setOnTouchListener(this);
         number_button.setOnLongClickListener(this);
 
         Button button_more = (Button) findViewById(R.id.button_more);
-        button_more.setOnClickListener(this);
+        button_more.setOnTouchListener(this);
     }
 
     @Override
-    public void onClick(View v) {
+    public boolean onTouch(View v, MotionEvent event) {
         switch (v.getId()) {
             case R.id.number_button:
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                startNumberActivity();
-                break;
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    startNumberActivity();
+                    return true;
+                }
+                return false;
 
             case R.id.button_more:
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                startGetButtonActivity();
-                break;
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    startGetButtonActivity();
+                    return true;
+                }
+                return false;
+
+            default:
+                return false;
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
         if(v.getId() == R.id.number_button){
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             startAboutActivity();
         }
         return true;
@@ -173,13 +185,10 @@ public class MainActivity extends Activity
         if (mSignInClicked || mAutoStartSignInFlow) {
             mAutoStartSignInFlow = false;
             mSignInClicked = false;
-            mResolvingConnectionFailure = true;
 
-            if (!BaseGameUtils.resolveConnectionFailure(this,
+            mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
                     mGoogleApiClient, connectionResult,
-                    RC_SIGN_IN, "Connection to Google Play failed!")) {
-                mResolvingConnectionFailure = false;
-            }
+                    RC_SIGN_IN, "Connection to Google Play failed!");
         }
         Toast.makeText(getApplicationContext(), "Connected to Google Play", Toast.LENGTH_SHORT).show();
     }
@@ -192,10 +201,6 @@ public class MainActivity extends Activity
             if (resultCode == RESULT_OK) {
                 mGoogleApiClient.connect();
             } else {
-                // Bring up an error dialog to alert the user that sign-in
-                // failed. The R.string.signin_failure should reference an error
-                // string in your strings.xml file that tells the user they
-                // could not be signed in, such as "Unable to sign in."
                 BaseGameUtils.showActivityResultError(this,
                         requestCode, resultCode, 0);
             }
