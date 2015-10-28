@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
     private int counter;
     private static final String SHARED_PREFS = "shared_preferences";
 
@@ -18,17 +18,20 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         counter = 0;
 
-        final Button aboutVersion = (Button) findViewById(R.id.aboutVersion); // 'Hidden' button
+        initializeButtons();
+    }
 
-        aboutVersion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                counter ++;
-                if (counter == 5) {
-                    startEasterEggActivity();
-                }
-            }
-        });
+    public void initializeButtons() {
+        Button aboutVersion = (Button) findViewById(R.id.aboutVersion); // 'Hidden' button
+        aboutVersion.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.aboutVersion) {
+            counter ++;
+            if (counter == 5) startEasterEggActivity();
+        }
     }
 
     public void setColors() {

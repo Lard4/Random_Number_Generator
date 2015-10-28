@@ -3,9 +3,8 @@ package com.dirinc.randomnumbergenerator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.os.Handler;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,11 +19,17 @@ import com.google.example.games.basegameutils.*;
 
 public class MainActivity extends Activity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        View.OnTouchListener, View.OnLongClickListener {
+        View.OnTouchListener {
+
+    private boolean hasLongClicked = false;
 
     private static final String SHARED_PREFS = "shared_preferences";
 
     private GoogleApiClient mGoogleApiClient;
+    private Handler handler;
+    private Runnable mLongPressed;
+    private Button number_button, button_more;
+
     private static int RC_SIGN_IN = 9001;
 
     private boolean mResolvingConnectionFailure = false;
@@ -41,35 +46,56 @@ public class MainActivity extends Activity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApiIfAvailable(Games.API).addScope(Games.SCOPE_GAMES)
+                .setViewForPopups(findViewById(android.R.id.content))
                 .build();
         signIn();
         initializeButtons();
     }
 
     public void initializeButtons() {
-        Button number_button = (Button) findViewById(R.id.number_button);
+        number_button = (Button) findViewById(R.id.number_button);
         number_button.setOnTouchListener(this);
-        number_button.setOnLongClickListener(this);
 
-        Button button_more = (Button) findViewById(R.id.button_more);
+        button_more = (Button) findViewById(R.id.button_more);
         button_more.setOnTouchListener(this);
+
+        handler = new Handler();
+        mLongPressed = new Runnable() {
+            public void run() {
+                startActivity(2);
+                hasLongClicked = true;
+            }
+        };
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (v.getId()) {
             case R.id.number_button:
-                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    number_button.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    startNumberActivity();
+                    handler.postDelayed(mLongPressed, 1000);
+                    return true;
+                } else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    number_button.setBackgroundColor(getResources().getColor(R.color.button_background));
+                    handler.removeCallbacks(mLongPressed);
+                    if(!hasLongClicked) {
+                        startActivity(1);
+                    }
+                    hasLongClicked = false;
                     return true;
                 }
                 return false;
 
             case R.id.button_more:
-                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    button_more.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    startGetButtonActivity();
+                    return true;
+                } else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    button_more.setBackgroundColor(getResources().getColor(R.color.button_background));
+                    startActivity(3);
                     return true;
                 }
                 return false;
@@ -79,16 +105,8 @@ public class MainActivity extends Activity
         }
     }
 
-    @Override
-    public boolean onLongClick(View v) {
-        if(v.getId() == R.id.number_button){
-            v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            startAboutActivity();
-        }
-        return true;
-    }
-
     public void setColors() {
+        Log.d("UI", "Setting Theme Color");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         String unlockedColor = sharedPreferences.getString("color", "");
 
@@ -120,19 +138,33 @@ public class MainActivity extends Activity
         }
     }
 
-    public void startNumberActivity() {
-        Intent changeActivities = new Intent(this, NumberActivity.class);
-        startActivity(changeActivities);
-    }
+    public void startActivity(int which) {
+        Intent changeActivities;
 
-    public void startAboutActivity() {
-        Intent changeActivities = new Intent(this, AboutActivity.class);
-        startActivity(changeActivities);
-    }
+        /*
+         * 1 for Number Activity
+         * 2 for About
+         * 3 for Fun Stuff
+         */
+        switch (which) {
+            case 1:
+                changeActivities = new Intent(this, NumberActivity.class);
+                Log.d("ActivitySwitch", "Switching to Number Activity");
+                startActivity(changeActivities);
+                break;
 
-    public void startGetButtonActivity() {
-        Intent changeActivities = new Intent(this, GetButtonActivity.class);
-        startActivity(changeActivities);
+            case 2:
+                changeActivities = new Intent(this, AboutActivity.class);
+                Log.d("ActivitySwitch", "Switching to About Activity");
+                startActivity(changeActivities);
+                break;
+
+            case 3:
+                changeActivities = new Intent(this, GetButtonActivity.class);
+                Log.d("ActivitySwitch", "Switching to Get Button Activity");
+                startActivity(changeActivities);
+                break;
+        }
     }
 
     @Override

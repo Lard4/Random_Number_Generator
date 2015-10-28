@@ -1,12 +1,15 @@
 <resources>
-    <color name="button_background">#16000000</color>
-    <color name="button_background_pressed">#32000000</color>
+    <color name="button_background">@color/tinter</color>
+    <color name="button_background_pressed">@color/tinter_dark</color>
     <color name="button_text_color">@android:color/white</color>
 
     <color name="primary_background">#FF7BC261</color>
     <color name="primary_background_dark">#FF629B4D</color>
-    <color name="transparent_background">#16000000</color>
-    <color name="tinter">@color/transparent_background</color>
+    <color name="tinter">#16000000</color>
+    <color name="tinter_dark">#32000000</color>
+
+    <color name="dialog_background">#FF424242</color>
+    <color name="dialog_accent">#FF006699</color>
 
     <color name="transparent">#00000000</color>
 

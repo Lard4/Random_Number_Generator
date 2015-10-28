@@ -1,11 +1,15 @@
 package com.dirinc.randomnumbergenerator;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
@@ -20,7 +24,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class NumberActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, View.OnTouchListener {
 
     private int stashedRecord;
     private int minimumRandomNumber = 1;
@@ -38,6 +42,9 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
     // Google Play API stuff
     private GoogleApiClient mGoogleApiClient;
+
+    // Buttons
+    private Button doItAgain, leaderboards, back;
 
     private boolean mResolvingConnectionFailure = false;
     private boolean mSignInClicked = false;
@@ -57,10 +64,58 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApiIfAvailable(Games.API).addScope(Games.SCOPE_GAMES)
+                .setViewForPopups(findViewById(android.R.id.content))
                 .build();
         signIn();
 
+        initializeButtons();
         startNumberActivity();
+    }
+
+    public void initializeButtons() {
+        doItAgain = (Button) findViewById(R.id.doItAgain);
+        doItAgain.setOnTouchListener(this);
+
+        leaderboards = (Button) findViewById(R.id.leaderboards);
+        leaderboards.setOnTouchListener(this);
+
+        back = (Button) findViewById(R.id.back);
+        back.setOnTouchListener(this);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.doItAgain:
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    doItAgain.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    decideGeneration();
+                    return true;
+                } else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    doItAgain.setBackgroundColor(getResources().getColor(R.color.button_background));
+                }
+                return false;
+
+            case R.id.back:
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    startActivity(1);
+                    return true;
+                }
+                return false;
+
+            case R.id.leaderboards:
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    showLeaderboards(0);
+                    return true;
+                }
+                return false;
+
+            default:
+                return false;
+        }
     }
 
     public void startNumberActivity() {
@@ -72,33 +127,6 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         randomNumber = (TextView) findViewById(R.id.randomNumber);
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         percentOdds = (TextView) findViewById(R.id.percentOdds);
-        Button doItAgain = (Button) findViewById(R.id.doItAgain);
-        Button leaderboards = (Button) findViewById(R.id.leaderboards);
-        Button back = (Button) findViewById(R.id.back);
-
-        doItAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                decideGeneration();
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                decideGeneration();
-            }
-        });
-
-        leaderboards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                showLeaderboards(0);
-            }
-        });
 
         stashedRecord = sharedPreferences.getInt("stashedRecord", 1000000);
         betterButtonOneCounter = sharedPreferences.getInt("stashedBetterButtonOneCounter", 0);
@@ -208,36 +236,43 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     public void decideColor() {
         if ((stashedRecord <= 10000) && (stashedRecord > 5000) && (!Objects.equals(unlockedColor, "Purple"))) {
             unlockedColor = "Purple";
+            showDialog();
             setTheme(R.style.Purple);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 5000) && (stashedRecord > 2500) && (!Objects.equals(unlockedColor, "Blue"))) {
             unlockedColor = "Blue";
+            showDialog();
             setTheme(R.style.Blue);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 2500) && (stashedRecord > 750) && (!Objects.equals(unlockedColor, "Teal"))) {
             unlockedColor = "Teal";
+            showDialog();
             setTheme(R.style.Teal);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 750) && (stashedRecord > 100) && (!Objects.equals(unlockedColor, "Yellow"))) {
             unlockedColor = "Yellow";
+            showDialog();
             setTheme(R.style.Yellow);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 100) && (stashedRecord > 50) && (!Objects.equals(unlockedColor, "Orange"))) {
             unlockedColor = "Orange";
+            showDialog();
             setTheme(R.style.Orange);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 50) && (stashedRecord > 1) && (!Objects.equals(unlockedColor, "Red"))) {
             unlockedColor = "Red";
+            showDialog();
             setTheme(R.style.Red);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if (stashedRecord == 1) {
             unlockedColor = "Pink";
+            showDialog();
             setTheme(R.style.Pink);
             setContentView(R.layout.activity_number);
             startNumberActivity();
@@ -260,8 +295,11 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         if(recordNumber != null) recordNumber.setText(recordString);
 
         saveInfo();
-        updateLeaderboard(b);
+        setFactoid();
         decideColor();
+
+        if(stashedRecord <= 20000) updateLeaderboard(b);
+
 
         if((unlockedColor.equals("Purple") && (firstTimePurpley))) achievementsPurpley();
         if((unlockedColor.equals("Yellow") && (firstTimeYellow))) achievementsHalfway();
@@ -276,6 +314,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void setColors() {
+        Log.d("UI", "Setting Theme Color");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
 
@@ -307,17 +346,29 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         }
     }
 
+    public void setFactoid() {
+        FunFacts retriever = new FunFacts();
+        String[] factoidArr = retriever.getFactoid();
+
+        String lessThanLine = factoidArr[0];
+        String factoidGutsLine = factoidArr[1];
+
+        TextView factoid = (TextView) findViewById(R.id.factoid);
+        if(factoid != null) factoid.setText(lessThanLine);
+
+        TextView factoidDetail = (TextView) findViewById(R.id.factoidGuts);
+        if(factoidDetail != null) factoidDetail.setText(factoidGutsLine);
+    }
+
     public void updateLeaderboard(int b) {
         Log.d("FUNCTIONALITY", "Updating leaderboard");
         if (isSignedIn()) {
             if (b == 0) {
                 Log.d("LEADERBOARD", "Updating leaderboard: Standard Button");
                 Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_STANDARDBUTTON), stashedRecord);
-                showLeaderboards(1);
             } else if (b == 1) {
                 Log.d("LEADERBOARD", "Updating leaderboard: Better Button");
                 Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_BETTERBUTTON), stashedRecord);
-                showLeaderboards(2);
             }
         } else {
             BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
@@ -374,6 +425,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     public void showLeaderboards(int x) {
         switch (x) {
             case 0:
+                Log.d("ActivitySwitch", "Showing Leaderboards");
                 startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
                         RC_UNUSED);
                 break;
@@ -438,13 +490,46 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         }
     }
 
+    public void startActivity(int which) {
+        Intent changeActivities;
+
+        switch (which) {
+            case 1:
+                changeActivities= new Intent(this, MainActivity.class);
+                Log.d("ActivitySwitch", "Switching to Main Activity");
+                startActivity(changeActivities);
+                break;
+        }
+    }
+
+    public void showDialog() {
+        setTheme(R.style.Dialog);
+        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.Dialog))
+                 .setTitle("ᕙ( * •̀ ᗜ •́ * )ᕗ   New Theme!")
+                 .setMessage("Congrats ming mang, you got a new color scheme!")
+                 .setPositiveButton("Ok m8!", new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                         //bruh
+                         initializeButtons();
+                         setFactoid();
+                     }
+                 })
+                 .show();
+        setColors();
+        initializeButtons();
+    }
+
+    public int getRecord() {
+        return stashedRecord;
+    }
+
     public void saveInfo() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
         editor.putString("color", unlockedColor);
-        editor.commit();
+        editor.apply();
     }
 
     @Override
@@ -454,7 +539,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
         editor.putString("color", unlockedColor);
-        editor.commit();
+        editor.apply();
 
         super.onStop();
     }

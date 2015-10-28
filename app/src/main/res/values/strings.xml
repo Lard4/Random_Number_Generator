@@ -22,8 +22,11 @@
     <string name="about_line_2">Copyright 2015 - All rights reserved</string>
     <string name="about_line_3">Version 1.3 - PreRelease</string>
 
+    <string name="dialog_icon">ᕙ( * •̀ ᗜ •́ * )ᕗ</string>
+
     <string name="title_activity_get_button">GetButtonActivity</string>
     <string name="title_activity_number">NumberActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_easter_egg">EasterEggActivity</string>
+    <string name="title_activity_dialog">DialogActivity</string>
 </resources>

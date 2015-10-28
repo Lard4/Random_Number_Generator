@@ -3,7 +3,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="button_text_padding_left">10dp</dimen>
     <dimen name="button_text_padding_right">10dp</dimen>
-    <dimen name="button_elevation">2dp</dimen>
+    <dimen name="button_elevation">40dp</dimen>
 
     <dimen name="random_number">21sp</dimen>
     <dimen name="record_low">30sp</dimen>

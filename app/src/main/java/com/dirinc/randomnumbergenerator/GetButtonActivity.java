@@ -3,6 +3,7 @@ package com.dirinc.randomnumbergenerator;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
@@ -52,7 +53,7 @@ public class GetButtonActivity extends AppCompatActivity {
             // There shall not be more than one that is tru
             editor.putBoolean("better_button0", isApply0);
             editor.putBoolean("better_button1", isApply1);
-            editor.commit();
+            editor.apply();
 
             Toast.makeText(getApplicationContext(), "Better Button 1 Applied!", Toast.LENGTH_SHORT).show();
         }
@@ -62,7 +63,7 @@ public class GetButtonActivity extends AppCompatActivity {
             // There shall not be more than one that is tru
             editor.putBoolean("better_button0", isApply0);
             editor.putBoolean("better_button1", isApply1);
-            editor.commit();
+            editor.apply();
 
             Toast.makeText(getApplicationContext(), "Standard Button Applied!", Toast.LENGTH_SHORT).show();
         }
@@ -81,6 +82,7 @@ public class GetButtonActivity extends AppCompatActivity {
     }
 
     public void setColors() {
+        Log.d("UI", "Setting Theme Color");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         String unlockedColor = sharedPreferences.getString("color", "");
 
