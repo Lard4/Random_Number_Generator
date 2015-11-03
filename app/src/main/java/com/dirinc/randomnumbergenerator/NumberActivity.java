@@ -43,8 +43,10 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     // Google Play API stuff
     private GoogleApiClient mGoogleApiClient;
 
+    private SharedPreferences sharedPreferences;
+
     // Buttons
-    private Button doItAgain, leaderboards, back;
+    private Button doItAgain;
 
     private boolean mResolvingConnectionFailure = false;
     private boolean mSignInClicked = false;
@@ -76,10 +78,10 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         doItAgain = (Button) findViewById(R.id.doItAgain);
         doItAgain.setOnTouchListener(this);
 
-        leaderboards = (Button) findViewById(R.id.leaderboards);
+        Button leaderboards = (Button) findViewById(R.id.leaderboards);
         leaderboards.setOnTouchListener(this);
 
-        back = (Button) findViewById(R.id.back);
+        Button back = (Button) findViewById(R.id.back);
         back.setOnTouchListener(this);
     }
 
@@ -119,7 +121,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void startNumberActivity() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
         boolean isBetterButton0;
         boolean isBetterButton1;
@@ -149,7 +151,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void decideGeneration() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
 
         boolean isApply0;
         boolean isApply1;
@@ -159,7 +161,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             editor.putBoolean("better_button1", false);
             editor.putBoolean("better_button0", true);
             editor.putInt("stashedBetterButtonOneCounter", 0);
-            editor.commit();
+            editor.apply();
 
             Toast.makeText(getApplicationContext(), "Better Button 1 has ran out of clicks!", Toast.LENGTH_SHORT).show();
             betterButtonOneCounter = 0;
@@ -227,51 +229,58 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
 
         betterButtonOneCounter++;
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
-        editor.commit();
+        editor.apply();
     }
 
     public void decideColor() {
         if ((stashedRecord <= 10000) && (stashedRecord > 5000) && (!Objects.equals(unlockedColor, "Purple"))) {
             unlockedColor = "Purple";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Purple);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 5000) && (stashedRecord > 2500) && (!Objects.equals(unlockedColor, "Blue"))) {
             unlockedColor = "Blue";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Blue);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 2500) && (stashedRecord > 750) && (!Objects.equals(unlockedColor, "Teal"))) {
             unlockedColor = "Teal";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Teal);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 750) && (stashedRecord > 100) && (!Objects.equals(unlockedColor, "Yellow"))) {
             unlockedColor = "Yellow";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Yellow);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 100) && (stashedRecord > 50) && (!Objects.equals(unlockedColor, "Orange"))) {
             unlockedColor = "Orange";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Orange);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 50) && (stashedRecord > 1) && (!Objects.equals(unlockedColor, "Red"))) {
             unlockedColor = "Red";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Red);
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if (stashedRecord == 1) {
             unlockedColor = "Pink";
+            saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Pink);
             setContentView(R.layout.activity_number);
@@ -294,9 +303,9 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         if(recordNumber != null) recordNumber.setText(recordString);
 
-        saveInfo();
         setFactoid();
         decideColor();
+        saveInfo(unlockedColor);
 
         if(stashedRecord <= 20000) updateLeaderboard(b);
 
@@ -309,49 +318,164 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     public void refreshRecord() { // ELSE FROM GENERATENUMBER__()
         String stashedRecordString =  "Record: " + stashedRecord;
 
+        setFactoid();
+
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         if(recordNumber != null) recordNumber.setText(stashedRecordString);
     }
 
     public void setColors() {
         Log.d("UI", "Setting Theme Color");
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
+        Log.d("UI", "Theme Color should be set to " + unlockedColor);
 
         switch (unlockedColor) {
             case "Purple":
+                Log.d("UI", "Setting Theme Color to PURPLE");
                 setTheme(R.style.Purple);
                 break;
             case "Blue":
+                Log.d("UI", "Setting Theme Color to BLUE");
                 setTheme(R.style.Blue);
                 break;
             case "Teal":
+                Log.d("UI", "Setting Theme Color to TEAL");
                 setTheme(R.style.Teal);
                 break;
             case "Yellow":
+                Log.d("UI", "Setting Theme Color to YELLOW");
                 setTheme(R.style.Yellow);
                 break;
             case "Orange":
+                Log.d("UI", "Setting Theme Color to ORANGE");
                 setTheme(R.style.Orange);
                 break;
             case "Red":
+                Log.d("UI", "Setting Theme Color to RED");
                 setTheme(R.style.Red);
                 break;
             case "Pink":
+                Log.d("UI", "Setting Theme Color to PINK");
                 setTheme(R.style.Pink);
                 break;
             default:
+                Log.e("UI", "Setting Theme Color DEFAULTING");
                 setTheme(R.style.AppTheme);
                 break;
         }
     }
 
     public void setFactoid() {
-        FunFacts retriever = new FunFacts();
-        String[] factoidArr = retriever.getFactoid();
+        Log.d("Functionality", "Starting FunFacts");
 
-        String lessThanLine = factoidArr[0];
-        String factoidGutsLine = factoidArr[1];
+        int factoidRecord = stashedRecord + 1;
+        String lessThanLine;
+        String factoidGutsLine = "";
+
+        String[] factoidArr = new String[2];
+
+        if((stashedRecord < 500000) && (stashedRecord > 400000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 50% chance.";
+            factoidGutsLine = "That's the odds of getting diagnosed with cancer!";
+        }
+        else if((stashedRecord < 400000) && (stashedRecord > 300000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 40% chance.";
+            factoidGutsLine = "That's the odds of a celebrity marriage lasting a lifetime!";
+        }
+        else if((stashedRecord < 300000) && (stashedRecord > 200000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 30% chance.";
+            factoidGutsLine = "That's the odds that any given president attended Harvard!";
+        }
+        else if((stashedRecord < 200000) && (stashedRecord > 100000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 20% chance.";
+            factoidGutsLine = "That's the odds of having a stroke!";
+        }
+        else if((stashedRecord < 100000) && (stashedRecord > 75000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 10% chance.";
+            factoidGutsLine = "That's the odds of getting the flu this year!";
+        }
+        else if((stashedRecord < 75000) && (stashedRecord > 50000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 7.5% chance.";
+            factoidGutsLine = "That's the odds of getting accepted to MIT!";
+        }
+        else if((stashedRecord < 50000) && (stashedRecord > 25000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 5% chance.";
+            factoidGutsLine = "That's the odds of being the victim of a serious crime in your lifetime!";
+        }
+        else if((stashedRecord < 25000) && (stashedRecord > 10000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 2.5% chance.";
+            factoidGutsLine = "That's the odds of being born with 11 toes!";
+        }
+        else if((stashedRecord < 10000) && (stashedRecord > 5000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 1% chance.";
+            factoidGutsLine = "That's the odds of being on a plane with a drunken pilot!";
+        }
+        else if((stashedRecord < 5000) && (stashedRecord > 4000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.5% chance.";
+            factoidGutsLine = "That's the odds of being audited by the IRS!";
+        }
+        else if((stashedRecord < 4000) && (stashedRecord > 3000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.4% chance.";
+            factoidGutsLine = "That's the odds of dating a millionaire!";
+        }
+        else if((stashedRecord < 3000) && (stashedRecord > 2000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.3% chance.";
+            factoidGutsLine = "That's the odds of dying in a car accident";
+        }
+        else if((stashedRecord < 2000) && (stashedRecord > 1000)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.2% chance.";
+            factoidGutsLine = "That's the odds of catching a ball at a major league baseball game";
+        }
+        else if((stashedRecord < 1000) && (stashedRecord > 750)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.1% chance.";
+            factoidGutsLine = "That's the odds of being killed while crossing the street";
+        } else if((stashedRecord < 750) && (stashedRecord > 500)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.075% chance.";
+            factoidGutsLine = "That's the odds of dying from accidental poisoning!";
+        }
+        else if((stashedRecord < 500) && (stashedRecord > 400)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.05% chance.";
+            factoidGutsLine = "That's the odds of dying from any injury this year!";
+        }
+        else if((stashedRecord < 400) && (stashedRecord > 300)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.04% chance.";
+            factoidGutsLine = "That's the odds of ";
+        }
+        else if((stashedRecord < 200) && (stashedRecord > 100)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.02% chance.";
+            factoidGutsLine = "That's the odds of an amateur golfer getting an  hole in one!";
+        }
+        else if((stashedRecord < 100) && (stashedRecord > 75)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.01% chance.";
+            factoidGutsLine = "That's the odds of winning the military Medal of Honor";
+        }
+        else if((stashedRecord < 75) && (stashedRecord > 50)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.0075% chance.";
+            factoidGutsLine = "That's the odds of being killed by a hippo";
+        }
+        else if((stashedRecord < 50) && (stashedRecord > 25)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.005% chance.";
+            factoidGutsLine = "That's the odds of slipping and dying in the shower!";
+        }
+        else if((stashedRecord < 25) && (stashedRecord > 10)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.0025% chance.";
+            factoidGutsLine = "That's the odds of dying due to sharp objects!";
+        }
+        else if((stashedRecord < 10) && (stashedRecord > 1)) {
+            lessThanLine = "Less than " + factoidRecord + "! You just beat about a 0.0001% chance.";
+            factoidGutsLine = "That's the odds of getting struck by lightning!";
+        }
+        else if(stashedRecord == 1) {
+            lessThanLine = "much wow. very sad.";
+        }
+        else {
+            lessThanLine = "Less than something big";
+            factoidGutsLine = "I don't know the odds of that.";
+        }
+
+        factoidArr[0] = lessThanLine;
+        factoidArr[1] = factoidGutsLine;
 
         TextView factoid = (TextView) findViewById(R.id.factoid);
         if(factoid != null) factoid.setText(lessThanLine);
@@ -373,7 +497,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         } else {
             BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
             // TODO: Auto-sign in to GPS
-            Log.d("GPS", "Google play services failed to connect on Leaderboard. Line: " +
+            Log.e("GPS", "Google play services failed to connect on Leaderboard. Line: " +
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -388,7 +512,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         } else {
             BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
             // TODO: Auto-sign in to GPS
-            Log.d("GPS", "Google play services failed to connect on Purple Achievement. Line: " +
+            Log.e("GPS", "Google play services failed to connect on Purple Achievement. Line: " +
                     Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
     }
@@ -462,7 +586,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("GPS", "Google Play Games FAILED");
+        Log.e("GPS", "Google Play Games FAILED");
         if (mResolvingConnectionFailure) {
             return;
         }
@@ -504,14 +628,14 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
     public void showDialog() {
         setTheme(R.style.Dialog);
+        setFactoid();
         new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.Dialog))
                  .setTitle("ᕙ( * •̀ ᗜ •́ * )ᕗ   New Theme!")
-                 .setMessage("Congrats ming mang, you got a new color scheme!")
+                 .setMessage("Congrats mang, you got a new color scheme!")
                  .setPositiveButton("Ok m8!", new DialogInterface.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          //bruh
                          initializeButtons();
-                         setFactoid();
                      }
                  })
                  .show();
@@ -519,26 +643,24 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         initializeButtons();
     }
 
-    public int getRecord() {
-        return stashedRecord;
-    }
-
-    public void saveInfo() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+    public void saveInfo(String color) {
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
-        editor.putString("color", unlockedColor);
+        editor.putString("color", color);
+        editor.putString("blah", "pls work");
         editor.apply();
     }
 
     @Override
     protected void onStop() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("stashedRecord", stashedRecord);
         editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
         editor.putString("color", unlockedColor);
+        editor.putString("blah", "pls work");
         editor.apply();
 
         super.onStop();

@@ -9,7 +9,6 @@ import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import android.util.Log;
 
 import com.google.android.gms.common.*;
@@ -203,13 +202,13 @@ public class MainActivity extends Activity
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.d("GPS", "Google Play Games SUSPENDED");
+        Log.e("GPS", "Google Play Games SUSPENDED");
         mGoogleApiClient.connect();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("GPS", "Google Play Games FAILED");
+        Log.e("GPS", "Google Play Games FAILED");
         if (mResolvingConnectionFailure) {
             return;
         }
@@ -222,7 +221,6 @@ public class MainActivity extends Activity
                     mGoogleApiClient, connectionResult,
                     RC_SIGN_IN, "Connection to Google Play failed!");
         }
-        Toast.makeText(getApplicationContext(), "Connected to Google Play", Toast.LENGTH_SHORT).show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode,
