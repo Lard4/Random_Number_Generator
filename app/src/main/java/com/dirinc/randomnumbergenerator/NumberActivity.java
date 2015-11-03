@@ -370,7 +370,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         Log.d("Functionality", "Starting FunFacts");
 
         int factoidRecord = stashedRecord + 1;
-        String lessThanLine;
+        String lessThanLine = "";
         String factoidGutsLine = "";
 
         String[] factoidArr = new String[2];
@@ -468,10 +468,6 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         }
         else if(stashedRecord == 1) {
             lessThanLine = "much wow. very sad.";
-        }
-        else {
-            lessThanLine = "Less than something big";
-            factoidGutsLine = "I don't know the odds of that.";
         }
 
         factoidArr[0] = lessThanLine;
