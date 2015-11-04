@@ -1,0 +1,4 @@
+<resources>
+    <color name="dialog_background">#FF424242</color>
+    <color name="dialog_accent">#FF006699</color>
+</resources>

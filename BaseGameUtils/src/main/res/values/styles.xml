@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="Dialog" parent="@android:style/Theme.Material.Dialog">
+        <item name="android:background">@color/dialog_background</item>
+        <item name="android:windowBackground">@color/dialog_background</item>
+        <item name="android:colorPrimary">@color/dialog_background</item>
+        <item name="android:colorAccent">@color/dialog_accent</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+</resources>

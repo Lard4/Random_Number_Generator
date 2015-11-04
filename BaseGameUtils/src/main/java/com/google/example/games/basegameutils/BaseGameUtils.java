@@ -155,6 +155,8 @@ public class BaseGameUtils {
      * @return an instance of {@link android.app.AlertDialog}
      */
     public static Dialog makeSimpleDialog(Activity activity, String text) {
+        /*Theme set = new Theme();
+        set.switchTheme();*/
         return (new AlertDialog.Builder(activity)).setMessage(text)
                 .setNeutralButton(android.R.string.ok, null).create();
     }

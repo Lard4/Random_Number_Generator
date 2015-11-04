@@ -34,9 +34,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
     private String unlockedColor;
 
-    private TextView randomNumber;
-    private TextView recordNumber;
-    private TextView percentOdds;
+    private TextView randomNumber, recordNumber, percentOdds;
 
     private static final String SHARED_PREFS = "shared_preferences";
 
@@ -262,6 +260,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Yellow);
+            setTextColor("black");
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 100) && (stashedRecord > 50) && (!Objects.equals(unlockedColor, "Orange"))) {
@@ -303,9 +302,8 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         if(recordNumber != null) recordNumber.setText(recordString);
 
-        setFactoid();
+        //setFactoid();
         decideColor();
-        saveInfo(unlockedColor);
 
         if(stashedRecord <= 20000) updateLeaderboard(b);
 
@@ -318,7 +316,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     public void refreshRecord() { // ELSE FROM GENERATENUMBER__()
         String stashedRecordString =  "Record: " + stashedRecord;
 
-        setFactoid();
+        //setFactoid();
 
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         if(recordNumber != null) recordNumber.setText(stashedRecordString);
@@ -346,27 +344,227 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             case "Yellow":
                 Log.d("UI", "Setting Theme Color to YELLOW");
                 setTheme(R.style.Yellow);
+                setTextColor("black");
                 break;
             case "Orange":
                 Log.d("UI", "Setting Theme Color to ORANGE");
                 setTheme(R.style.Orange);
+                setTextColor("white");
                 break;
             case "Red":
                 Log.d("UI", "Setting Theme Color to RED");
                 setTheme(R.style.Red);
+                setTextColor("white");
                 break;
             case "Pink":
                 Log.d("UI", "Setting Theme Color to PINK");
                 setTheme(R.style.Pink);
+                setTextColor("white");
                 break;
             default:
                 Log.e("UI", "Setting Theme Color DEFAULTING");
                 setTheme(R.style.AppTheme);
+                setTextColor("white");
                 break;
         }
     }
 
-    public void setFactoid() {
+    public void setTextColor(String c) {
+        String color = c.toLowerCase();
+        int newColor = 0;
+
+        switch (color) {
+            case "black":
+                newColor = (this.getResources().getColor(android.R.color.black));
+                break;
+
+            case "white":
+                newColor = (this.getResources().getColor(android.R.color.white));
+        }
+        if(randomNumber != null) randomNumber.setTextColor(newColor);
+        if(recordNumber != null) recordNumber.setTextColor(newColor);
+        if(percentOdds != null) percentOdds.setTextColor(newColor);
+        if(doItAgain != null) doItAgain.setTextColor(newColor);
+    }
+
+    public void updateLeaderboard(int b) {
+        Log.d("FUNCTIONALITY", "Updating leaderboard");
+        if (isSignedIn()) {
+            if (b == 0) {
+                Log.d("LEADERBOARD", "Updating leaderboard: Standard Button");
+                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_STANDARDBUTTON), stashedRecord);
+            } else if (b == 1) {
+                Log.d("LEADERBOARD", "Updating leaderboard: Better Button");
+                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_BETTERBUTTON), stashedRecord);
+            }
+        } else {
+            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
+            // TODO: Auto-sign in to GPS
+            Log.e("GPS", "Google play services failed to connect on Leaderboard. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void achievementsPurpley() {
+        Log.d("FUNCTIONALITY", "Updating Achievement: Purpley");
+        firstTimePurpley = false;
+        if (isSignedIn()) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_PURPLEY));
+            // Don't switch intents because the achievements UI makes me want to barf
+        } else {
+            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
+            // TODO: Auto-sign in to GPS
+            Log.e("GPS", "Google play services failed to connect on Purple Achievement. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void achievementsHalfway() {
+        Log.d("FUNCTIONALITY", "Updating Achievement: Halfway");
+        firstTimeYellow = false;
+        if (isSignedIn()) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_HALFWAYTHERE));
+            // Don't switch intents because the achievements UI makes me want to barf
+        } else {
+            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
+            // TODO: Auto-sign in to GPS
+            Log.d("GPS", "Google play services failed to connect on Halfway Achievement. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void achievementsMLG() {
+        Log.d("FUNCTIONALITY", "Updating Achievement: MLG SHIT");
+        if (isSignedIn()) {
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_MLGNUMBERGENERATOR));
+            // Don't switch intents because the achievements UI makes me want to barf
+        } else {
+            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
+            // TODO: Auto-sign in to GPS
+            Log.d("GPS", "Google play services failed to connect on MLG Achievement. Line: " +
+                    Thread.currentThread().getStackTrace()[2].getLineNumber());
+        }
+    }
+
+    public void showLeaderboards(int x) {
+        switch (x) {
+            case 0:
+                Log.d("ActivitySwitch", "Showing Leaderboards");
+                startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
+                        RC_UNUSED);
+                break;
+            case 1:
+                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                        getString(R.string.leaderboard_STANDARDBUTTON)), RC_UNUSED);
+                break;
+            case 2:
+                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                        getString(R.string.leaderboard_BETTERBUTTON)), RC_UNUSED);
+                break;
+        }
+    }
+
+    private void signIn() {
+        mSignInClicked = true;
+        mGoogleApiClient.connect();
+    }
+
+    private boolean isSignedIn() {
+        return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d("GPS", "Google Play Games CONNECTED");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d("GPS", "Google Play Games SUSPENDED");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e("GPS", "Google Play Games FAILED");
+        if (mResolvingConnectionFailure) {
+            return;
+        }
+
+        if (mSignInClicked || mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mSignInClicked = false;
+
+            mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
+                    mGoogleApiClient, connectionResult,
+                    RC_SIGN_IN, "Connection to Google Play failed!");
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+                BaseGameUtils.showActivityResultError(this,
+                        requestCode, resultCode, 0);
+            }
+        }
+    }
+
+    public void startActivity(int which) {
+        Intent changeActivities;
+
+        switch (which) {
+            case 1:
+                changeActivities= new Intent(this, MainActivity.class);
+                Log.d("ActivitySwitch", "Switching to Main Activity");
+                startActivity(changeActivities);
+                break;
+        }
+    }
+
+    public void showDialog() {
+        setTheme(R.style.Dialog);
+        //setFactoid();
+        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.Dialog))
+                 .setTitle("ᕙ( * •̀ ᗜ •́ * )ᕗ   New Theme!")
+                 .setMessage("Congrats mang, you got a new color scheme!")
+                 .setPositiveButton("Ok m8!", new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                         //bruh
+                         initializeButtons();
+                     }
+                 })
+                 .show();
+        setColors();
+        initializeButtons();
+    }
+
+    public void saveInfo(String color) {
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("stashedRecord", stashedRecord);
+        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
+        editor.putString("color", color);
+        editor.apply();
+    }
+
+    @Override
+    protected void onStop() {
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("stashedRecord", stashedRecord);
+        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
+        editor.putString("color", unlockedColor);
+        editor.apply();
+
+        super.onStop();
+    }
+
+    /* public void setFactoid() {
         Log.d("Functionality", "Starting FunFacts");
 
         int factoidRecord = stashedRecord + 1;
@@ -474,191 +672,9 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         factoidArr[1] = factoidGutsLine;
 
         TextView factoid = (TextView) findViewById(R.id.factoid);
-        if(factoid != null) factoid.setText(lessThanLine);
+        if(factoid != null) factoid.setText(factoidArr[0]);
 
         TextView factoidDetail = (TextView) findViewById(R.id.factoidGuts);
-        if(factoidDetail != null) factoidDetail.setText(factoidGutsLine);
-    }
-
-    public void updateLeaderboard(int b) {
-        Log.d("FUNCTIONALITY", "Updating leaderboard");
-        if (isSignedIn()) {
-            if (b == 0) {
-                Log.d("LEADERBOARD", "Updating leaderboard: Standard Button");
-                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_STANDARDBUTTON), stashedRecord);
-            } else if (b == 1) {
-                Log.d("LEADERBOARD", "Updating leaderboard: Better Button");
-                Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_BETTERBUTTON), stashedRecord);
-            }
-        } else {
-            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            // TODO: Auto-sign in to GPS
-            Log.e("GPS", "Google play services failed to connect on Leaderboard. Line: " +
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-    public void achievementsPurpley() {
-        Log.d("FUNCTIONALITY", "Updating Achievement: Purpley");
-        firstTimePurpley = false;
-        if (isSignedIn()) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_PURPLEY));
-            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                    RC_UNUSED);
-        } else {
-            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            // TODO: Auto-sign in to GPS
-            Log.e("GPS", "Google play services failed to connect on Purple Achievement. Line: " +
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-    public void achievementsHalfway() {
-        Log.d("FUNCTIONALITY", "Updating Achievement: Halfway");
-        firstTimeYellow = false;
-        if (isSignedIn()) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_HALFWAYTHERE));
-            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                    RC_UNUSED);
-        } else {
-            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            // TODO: Auto-sign in to GPS
-            Log.d("GPS", "Google play services failed to connect on Halfway Achievement. Line: " +
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-    public void achievementsMLG() {
-        Log.d("FUNCTIONALITY", "Updating Achievement: MLG SHIT");
-        if (isSignedIn()) {
-            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_MLGNUMBERGENERATOR));
-            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                    RC_UNUSED);
-        } else {
-            BaseGameUtils.makeSimpleDialog(this, "Google Play Services failed to connect").show();
-            // TODO: Auto-sign in to GPS
-            Log.d("GPS", "Google play services failed to connect on MLG Achievement. Line: " +
-                    Thread.currentThread().getStackTrace()[2].getLineNumber());
-        }
-    }
-
-    public void showLeaderboards(int x) {
-        switch (x) {
-            case 0:
-                Log.d("ActivitySwitch", "Showing Leaderboards");
-                startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
-                        RC_UNUSED);
-                break;
-            case 1:
-                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                        getString(R.string.leaderboard_STANDARDBUTTON)), RC_UNUSED);
-                break;
-            case 2:
-                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                        getString(R.string.leaderboard_BETTERBUTTON)), RC_UNUSED);
-                break;
-        }
-    }
-
-    private void signIn() {
-        mSignInClicked = true;
-        mGoogleApiClient.connect();
-    }
-
-    private boolean isSignedIn() {
-        return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.d("GPS", "Google Play Games CONNECTED");
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d("GPS", "Google Play Games SUSPENDED");
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e("GPS", "Google Play Games FAILED");
-        if (mResolvingConnectionFailure) {
-            return;
-        }
-
-        if (mSignInClicked || mAutoStartSignInFlow) {
-            mAutoStartSignInFlow = false;
-            mSignInClicked = false;
-
-            mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
-                    mGoogleApiClient, connectionResult,
-                    RC_SIGN_IN, "Connection to Google Play failed!");
-        }
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
-            mResolvingConnectionFailure = false;
-            if (resultCode == RESULT_OK) {
-                mGoogleApiClient.connect();
-            } else {
-                BaseGameUtils.showActivityResultError(this,
-                        requestCode, resultCode, 0);
-            }
-        }
-    }
-
-    public void startActivity(int which) {
-        Intent changeActivities;
-
-        switch (which) {
-            case 1:
-                changeActivities= new Intent(this, MainActivity.class);
-                Log.d("ActivitySwitch", "Switching to Main Activity");
-                startActivity(changeActivities);
-                break;
-        }
-    }
-
-    public void showDialog() {
-        setTheme(R.style.Dialog);
-        setFactoid();
-        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.Dialog))
-                 .setTitle("ᕙ( * •̀ ᗜ •́ * )ᕗ   New Theme!")
-                 .setMessage("Congrats mang, you got a new color scheme!")
-                 .setPositiveButton("Ok m8!", new DialogInterface.OnClickListener() {
-                     public void onClick(DialogInterface dialog, int which) {
-                         //bruh
-                         initializeButtons();
-                     }
-                 })
-                 .show();
-        setColors();
-        initializeButtons();
-    }
-
-    public void saveInfo(String color) {
-        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("stashedRecord", stashedRecord);
-        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
-        editor.putString("color", color);
-        editor.putString("blah", "pls work");
-        editor.apply();
-    }
-
-    @Override
-    protected void onStop() {
-        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("stashedRecord", stashedRecord);
-        editor.putInt("stashedBetterButtonOneCounter", betterButtonOneCounter);
-        editor.putString("color", unlockedColor);
-        editor.putString("blah", "pls work");
-        editor.apply();
-
-        super.onStop();
-    }
+        if(factoidDetail != null) factoidDetail.setText(factoidArr[1]);
+    } */
 }

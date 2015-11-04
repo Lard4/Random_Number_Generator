@@ -3,8 +3,9 @@
     <color name="button_background_pressed">@color/tinter_dark</color>
     <color name="button_text_color">@android:color/white</color>
 
-    <color name="primary_background">#FF7BC261</color>
-    <color name="primary_background_dark">#FF629B4D</color>
+    <color name="primary_background">#FF4CAF50</color>
+    <color name="primary_background_dark">#FF388E3C</color>
+
     <color name="tinter">#16000000</color>
     <color name="tinter_dark">#32000000</color>
 
@@ -36,4 +37,5 @@
 
     <color name="pink_primary_background">#FFE91E63</color>
     <color name="pink_navigation_bar_color">#FFBA184F</color>
+
 </resources>
