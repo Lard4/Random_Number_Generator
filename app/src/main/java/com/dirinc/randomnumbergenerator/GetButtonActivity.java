@@ -156,6 +156,6 @@ public class GetButtonActivity extends AppCompatActivity implements View.OnTouch
     @Override
     protected void onPause() {
         super.onPause();
-        toast.cancel();
+        if(toast != null) toast.cancel();
     }
 }

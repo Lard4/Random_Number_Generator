@@ -1,13 +1,9 @@
 package com.dirinc.randomnumbergenerator;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +29,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     private int stashedRecord;
     private int minimumRandomNumber = 1;
     private int betterButtonOneCounter;
+    private double odds;
 
     private boolean firstTimePurpley = true;
     private boolean firstTimeYellow = true;
@@ -106,7 +103,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     stashedRecord = 500;
-                    setRecord(500, 1);
+                    setRecord(3293, 1);
                     return true;
                 }
                 return false;
@@ -293,7 +290,8 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void makeOdds(int r, int max) {
-        double odds = ((double)r / (double)max) * 10.0;
+        odds = ((double)r / (double)max) * 10.0;
+        truncateTo(odds, 5);
         String percentOddsString = "You have a total " + odds +
                 "% chance of getting lower than " + r;
 
@@ -373,7 +371,6 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     public void setTextColor() {
         sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
-
         int newColor;
 
         switch (unlockedColor) {
@@ -391,7 +388,11 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         if (randomNumber != null) randomNumber.setTextColor(newColor);
         if (recordNumber != null) recordNumber.setTextColor(newColor);
         if (percentOdds != null) percentOdds.setTextColor(newColor);
-        if (doItAgain != null) doItAgain.setTextColor(newColor);
+    }
+
+    public void truncateTo( double unroundedNumber, int decimalPlaces ){
+        int truncatedNumberInt = (int)( unroundedNumber * Math.pow( 10, decimalPlaces ) );
+        odds = truncatedNumberInt / Math.pow( 10, decimalPlaces );
     }
 
     public void updateLeaderboard(int b) {
