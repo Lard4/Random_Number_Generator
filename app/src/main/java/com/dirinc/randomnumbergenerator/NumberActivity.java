@@ -1,9 +1,13 @@
 package com.dirinc.randomnumbergenerator;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +33,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
     private int stashedRecord;
     private int minimumRandomNumber = 1;
     private int betterButtonOneCounter;
+
     private boolean firstTimePurpley = true;
     private boolean firstTimeYellow = true;
 
@@ -100,7 +105,8 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             case R.id.back:
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    startActivity(1);
+                    stashedRecord = 500;
+                    setRecord(500, 1);
                     return true;
                 }
                 return false;
@@ -260,7 +266,6 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             saveInfo(unlockedColor);
             showDialog();
             setTheme(R.style.Yellow);
-            setTextColor("black");
             setContentView(R.layout.activity_number);
             startNumberActivity();
         } else if ((stashedRecord <= 100) && (stashedRecord > 50) && (!Objects.equals(unlockedColor, "Orange"))) {
@@ -304,6 +309,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
         //setFactoid();
         decideColor();
+        setTextColor();
 
         if(stashedRecord <= 20000) updateLeaderboard(b);
 
@@ -320,13 +326,12 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
         recordNumber = (TextView) findViewById(R.id.recordNumber);
         if(recordNumber != null) recordNumber.setText(stashedRecordString);
+        setTextColor();
     }
 
     public void setColors() {
-        Log.d("UI", "Setting Theme Color");
         sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
         unlockedColor = sharedPreferences.getString("color", "");
-        Log.d("UI", "Theme Color should be set to " + unlockedColor);
 
         switch (unlockedColor) {
             case "Purple":
@@ -344,47 +349,49 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             case "Yellow":
                 Log.d("UI", "Setting Theme Color to YELLOW");
                 setTheme(R.style.Yellow);
-                setTextColor("black");
                 break;
             case "Orange":
                 Log.d("UI", "Setting Theme Color to ORANGE");
                 setTheme(R.style.Orange);
-                setTextColor("white");
                 break;
             case "Red":
                 Log.d("UI", "Setting Theme Color to RED");
                 setTheme(R.style.Red);
-                setTextColor("white");
                 break;
             case "Pink":
                 Log.d("UI", "Setting Theme Color to PINK");
                 setTheme(R.style.Pink);
-                setTextColor("white");
                 break;
             default:
                 Log.e("UI", "Setting Theme Color DEFAULTING");
                 setTheme(R.style.AppTheme);
-                setTextColor("white");
                 break;
         }
+        setTextColor();
     }
 
-    public void setTextColor(String c) {
-        String color = c.toLowerCase();
-        int newColor = 0;
+    public void setTextColor() {
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        unlockedColor = sharedPreferences.getString("color", "");
 
-        switch (color) {
-            case "black":
+        int newColor;
+
+        switch (unlockedColor) {
+            case "Yellow":
+                Log.d("TEXTCOLOR", "Setting text color to black");
                 newColor = (this.getResources().getColor(android.R.color.black));
                 break;
 
-            case "white":
+            default:
+                Log.d("TEXTCOLOR", "Setting text color to white");
                 newColor = (this.getResources().getColor(android.R.color.white));
+                break;
         }
-        if(randomNumber != null) randomNumber.setTextColor(newColor);
-        if(recordNumber != null) recordNumber.setTextColor(newColor);
-        if(percentOdds != null) percentOdds.setTextColor(newColor);
-        if(doItAgain != null) doItAgain.setTextColor(newColor);
+
+        if (randomNumber != null) randomNumber.setTextColor(newColor);
+        if (recordNumber != null) recordNumber.setTextColor(newColor);
+        if (percentOdds != null) percentOdds.setTextColor(newColor);
+        if (doItAgain != null) doItAgain.setTextColor(newColor);
     }
 
     public void updateLeaderboard(int b) {
