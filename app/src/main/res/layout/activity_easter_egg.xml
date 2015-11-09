@@ -17,4 +17,13 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/easter_shrug" />
 
+    <Button
+        android:layout_width="@dimen/back_icon_size"
+        android:layout_height="@dimen/back_icon_size"
+        android:id="@+id/back"
+        android:background="@drawable/back"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

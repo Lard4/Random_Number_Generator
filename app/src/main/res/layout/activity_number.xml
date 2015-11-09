@@ -10,20 +10,6 @@
     tools:context="com.dirinc.number_game.NumberActivity">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_text_again"
-        android:textColor="@color/button_text_color"
-        android:id="@+id/doItAgain"
-        android:background="@drawable/button"
-        android:clickable="true"
-        android:paddingStart="@dimen/button_text_padding_left"
-        android:paddingEnd="@dimen/button_text_padding_right"
-        android:layout_below="@+id/randomNumber"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
-
-    <Button
         android:layout_width="@dimen/leaderboard_icon_size"
         android:layout_height="@dimen/leaderboard_icon_size"
         android:id="@+id/leaderboards"
@@ -41,6 +27,20 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_text_again"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/doItAgain"
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:paddingStart="@dimen/button_text_padding_left"
+        android:paddingEnd="@dimen/button_text_padding_right"
+        android:layout_below="@+id/randomNumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
     <TextView style="@style/RandomNumber"
         android:id="@+id/randomNumber"
         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="129dp" />
+        android:layout_marginTop="180dp" />
 
     <TextView style="@style/Odds"
         android:id="@+id/percentOdds"

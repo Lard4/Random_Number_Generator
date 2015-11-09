@@ -1,5 +1,6 @@
 package com.dirinc.number_game;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ public class GetButtonActivity extends AppCompatActivity implements View.OnTouch
     private Boolean isApply0;
 
     private Toast toast;
-    private Button better_button_1, better_button_0;
+    private Button better_button_1, better_button_0, back;
 
     private static final String SHARED_PREFS = "shared_preferences";
 
@@ -25,10 +26,33 @@ public class GetButtonActivity extends AppCompatActivity implements View.OnTouch
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_button);
 
+        if (android.os.Build.VERSION.SDK_INT>=19) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+
         isApply1 = false;
         isApply0 = false;
 
         initializeButons();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && android.os.Build.VERSION.SDK_INT>=19) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
     public void initializeButons() {
@@ -37,6 +61,9 @@ public class GetButtonActivity extends AppCompatActivity implements View.OnTouch
 
         better_button_0 = (Button) findViewById(R.id.better_button_0);
         better_button_0.setOnTouchListener(this);
+
+        back = (Button) findViewById(R.id.back);
+        back.setOnTouchListener(this);
     }
 
     @Override
@@ -56,6 +83,16 @@ public class GetButtonActivity extends AppCompatActivity implements View.OnTouch
                     better_button_1.setBackgroundColor(getResources().getColor(R.color.button_background));
                 }
 
+                return false;
+
+            case R.id.back:
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    Intent changeActivities = new Intent(this, MainActivity.class);
+                    Log.d("ActivitySwitch", "Switching to Main Activity");
+                    startActivity(changeActivities);
+                    return true;
+                }
                 return false;
 
             case R.id.better_button_0:

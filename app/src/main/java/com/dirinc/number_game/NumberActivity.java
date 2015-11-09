@@ -62,6 +62,16 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number);
 
+        if (android.os.Build.VERSION.SDK_INT>=19) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -72,6 +82,19 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
         initializeButtons();
         startNumberActivity();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && android.os.Build.VERSION.SDK_INT>=19) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
     public void initializeButtons() {
@@ -102,8 +125,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
             case R.id.back:
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    stashedRecord = 500;
-                    setRecord(3293, 1);
+                    startActivity(1);
                     return true;
                 }
                 return false;
@@ -527,7 +549,7 @@ public class NumberActivity extends AppCompatActivity implements GoogleApiClient
 
         switch (which) {
             case 1:
-                changeActivities= new Intent(this, MainActivity.class);
+                changeActivities = new Intent(this, MainActivity.class);
                 Log.d("ActivitySwitch", "Switching to Main Activity");
                 startActivity(changeActivities);
                 break;
