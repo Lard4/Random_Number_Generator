@@ -1,4 +1,4 @@
-package com.dirinc.randomnumbergenerator;
+package com.dirinc.number_game;
 
 import android.app.Activity;
 import android.content.Intent;

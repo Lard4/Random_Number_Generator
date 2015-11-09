@@ -1,8 +1,13 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar.FullScreen">
         <item name="android:background">@color/primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/primary_background_dark</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="RandomNumber" parent="TextAppearance.AppCompat">
@@ -44,43 +49,29 @@
 
     <style name="Purple">
         <item name="android:background">@color/purple_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/purple_navigation_bar_color</item>
     </style>
 
     <style name="Blue">
         <item name="android:background">@color/blue_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/blue_navigation_bar_color</item>
     </style>
 
     <style name="Teal">
         <item name="android:background">@color/teal_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/teal_navigation_bar_color</item>
     </style>
 
     <style name="Yellow">
         <item name="android:background">@color/yellow_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/yellow_navigation_bar_color</item>
     </style>
 
     <style name="Orange">
         <item name="android:background">@color/orange_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/orange_navigation_bar_color</item>
     </style>
 
     <style name="Red">
         <item name="android:background">@color/red_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/red_navigation_bar_color</item>
     </style>
 
     <style name="Pink">
         <item name="android:background">@color/pink_primary_background</item>
-        <item name="android:statusBarColor">@color/button_background</item>
-        <item name="android:navigationBarColor">@color/pink_navigation_bar_color</item>
     </style>
 </resources>

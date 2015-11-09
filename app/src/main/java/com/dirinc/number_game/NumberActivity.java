@@ -1,4 +1,4 @@
-package com.dirinc.randomnumbergenerator;
+package com.dirinc.number_game;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

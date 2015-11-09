@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dirinc.randomnumbergenerator" >
+    package="com.dirinc.number_game" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -41,7 +41,7 @@
             android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dirinc.randomnumbergenerator.MainActivity" />
+                android:value="com.dirinc.number_game.MainActivity" />
         </activity>
 
         <activity
@@ -52,7 +52,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dirinc.randomnumbergenerator.MainActivity" />
+                android:value="com.dirinc.number_game.MainActivity" />
         </activity>
 
         <activity
@@ -63,7 +63,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dirinc.randomnumbergenerator.MainActivity" />
+                android:value="com.dirinc.number_game.MainActivity" />
         </activity>
 
         <activity
@@ -74,7 +74,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dirinc.randomnumbergenerator.MainActivity" />
+                android:value="com.dirinc.number_game.MainActivity" />
         </activity>
 
     </application>

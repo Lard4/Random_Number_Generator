@@ -1,11 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'kdixson538'
+            keyPassword 'android'
+            storeFile file('/Users/Kids/Desktop/Android_Studio_Projects/RNG_Key/keystore.jks')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
-
     defaultConfig {
-        applicationId "com.dirinc.randomnumbergenerator"
+        applicationId "com.dirinc.number_game"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
@@ -15,6 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
 }
