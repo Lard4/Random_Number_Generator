@@ -27,6 +27,12 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="Countdown" parent="android:Theme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/countdown_size</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <style name="Odds" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/odds</item>
@@ -40,6 +46,12 @@
         <item name="android:colorAccent">@color/dialog_accent</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Initial_Countdown" parent="Theme.AppCompat">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/initial_countdown_text</item>
     </style>
 
     <style name="Purple">

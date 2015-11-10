@@ -1,45 +1,44 @@
 package com.dirinc.number_game;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.util.Log;
+import android.widget.TextView;
 
-import com.google.android.gms.common.*;
-import com.google.android.gms.common.api.*;
-import com.google.android.gms.games.*;
-import com.google.example.games.basegameutils.*;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 
-public class MainActivity extends Activity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        View.OnTouchListener {
-
-    private boolean hasLongClicked = false;
-
-    private static final String SHARED_PREFS = "shared_preferences";
+public class ArcadeActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, View.OnTouchListener {
 
     private GoogleApiClient mGoogleApiClient;
-    private Handler handler;
-    private Runnable mLongPressed;
-    private Button number_button, button_more, button_arcade;
+    public TextView countdown;
+    private Button button_arcade_go;
+    public static ArcadeActivity activity;
 
     private static int RC_SIGN_IN = 9001;
+
+    private static final String SHARED_PREFS = "shared_preferences";
 
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
     private boolean mSignInClicked = false;
 
     @Override
-    protected void onCreate(Bundle icicle) {
+    protected void onCreate(Bundle savedInstanceState) {
         setColors();
-        super.onCreate(icicle);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_arcade);
+
+        activity = this;
 
         if (android.os.Build.VERSION.SDK_INT>=19) {
             getWindow().getDecorView().setSystemUiVisibility(
@@ -58,7 +57,12 @@ public class MainActivity extends Activity
                 .setViewForPopups(findViewById(android.R.id.content))
                 .build();
         signIn();
+
         initializeButtons();
+    }
+
+    public static ArcadeActivity getInstance(){
+        return activity;
     }
 
     @Override
@@ -74,65 +78,17 @@ public class MainActivity extends Activity
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
-    public void initializeButtons() {
-        number_button = (Button) findViewById(R.id.number_button);
-        number_button.setOnTouchListener(this);
-
-        button_more = (Button) findViewById(R.id.button_more);
-        button_more.setOnTouchListener(this);
-
-        button_arcade = (Button) findViewById(R.id.button_arcade);
-        button_arcade.setOnTouchListener(this);
-
-        handler = new Handler();
-        mLongPressed = new Runnable() {
-            public void run() {
-                startActivity(2);
-                hasLongClicked = true;
-            }
-        };
-    }
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (v.getId()) {
-            case R.id.number_button:
+            case R.id.button_arcade_go:
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    number_button.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
-                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    handler.postDelayed(mLongPressed, 1000);
-                    return true;
-                } else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    number_button.setBackgroundColor(getResources().getColor(R.color.button_background));
-                    handler.removeCallbacks(mLongPressed);
-                    if(!hasLongClicked) {
-                        startActivity(1);
-                    }
-                    hasLongClicked = false;
-                    return true;
-                }
-                return false;
-
-            case R.id.button_more:
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    button_more.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
+                    button_arcade_go.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     return true;
                 } else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    button_more.setBackgroundColor(getResources().getColor(R.color.button_background));
-                    startActivity(3);
-                    return true;
-                }
-                return false;
-
-            case R.id.button_arcade:
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    button_arcade.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
-                    v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    return true;
-                } else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    button_arcade.setBackgroundColor(getResources().getColor(R.color.button_background));
-                    startActivity(4);
+                    button_arcade_go.setBackgroundColor(getResources().getColor(R.color.button_background));
+                    startActivity(1);
                     return true;
                 }
                 return false;
@@ -140,6 +96,20 @@ public class MainActivity extends Activity
             default:
                 return false;
         }
+    }
+
+    public void initializeButtons() {
+        countdown = (TextView) findViewById(R.id.countdown);
+
+        button_arcade_go = (Button) findViewById(R.id.button_arcade_go);
+        button_arcade_go.setOnTouchListener(this);
+    }
+
+    public void updateCountdown(String secs) {
+        Log.d("COUNTDOWN", "Updating clock");
+        setContentView(R.layout.activity_arcade);
+        initializeButtons();
+        countdown.setText(secs);
     }
 
     public void setColors() {
@@ -179,43 +149,15 @@ public class MainActivity extends Activity
         Intent changeActivities;
 
         /*
-         * 1 for Number Activity
-         * 2 for About
-         * 3 for Fun Stuff
-         * 4 for Arcade
+         * 1 for Initial Countdown Activity
          */
         switch (which) {
             case 1:
-                changeActivities = new Intent(this, NumberActivity.class);
-                Log.d("ActivitySwitch", "Switching to Number Activity");
+                changeActivities = new Intent(this, ArcadeCountdownActivity.class);
+                Log.d("ActivitySwitch", "Switching to Initial Countdown Activity");
                 startActivity(changeActivities);
                 break;
-
-            case 2:
-                changeActivities = new Intent(this, AboutActivity.class);
-                Log.d("ActivitySwitch", "Switching to About Activity");
-                startActivity(changeActivities);
-                break;
-
-            case 3:
-                changeActivities = new Intent(this, GetButtonActivity.class);
-                Log.d("ActivitySwitch", "Switching to Get Button Activity");
-                startActivity(changeActivities);
-                break;
-
-            case 4:
-                changeActivities = new Intent(this, ArcadeActivity.class);
-                Log.d("ActivitySwitch", "Switching to Arcade Activity");
-                startActivity(changeActivities);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        setColors();
-        super.onResume();
-        setContentView(R.layout.activity_main);
-        initializeButtons();
     }
 
     @Override

@@ -3,7 +3,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="button_text_padding_left">10dp</dimen>
     <dimen name="button_text_padding_right">10dp</dimen>
-    <dimen name="button_elevation">40dp</dimen>
 
     <dimen name="random_number">21sp</dimen>
     <dimen name="record_low">30sp</dimen>
@@ -13,6 +12,9 @@
 
     <dimen name="leaderboard_icon_size">35dp</dimen>
     <dimen name="back_icon_size">35dp</dimen>
+
+    <dimen name="countdown_size">40sp</dimen>
+    <dimen name="initial_countdown_text">200sp</dimen>
 
     <dimen name="about_text">40sp</dimen>
     <dimen name="about_text_version">20sp</dimen>

@@ -19,8 +19,8 @@
         android:longClickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="400dp"
+        android:layout_marginTop="200dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -33,8 +33,22 @@
         android:clickable="true"
         android:paddingStart="@dimen/button_text_padding_left"
         android:paddingEnd="@dimen/button_text_padding_right"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/number_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="200dp" />
+        android:layout_marginTop="100dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_arcade"
+        android:textColor="@color/button_text_color"
+        android:id="@+id/button_arcade"
+        android:background="@drawable/button"
+        android:clickable="true"
+        android:paddingStart="@dimen/button_text_padding_left"
+        android:paddingEnd="@dimen/button_text_padding_right"
+        android:layout_below="@+id/button_more"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
 
 </RelativeLayout>
