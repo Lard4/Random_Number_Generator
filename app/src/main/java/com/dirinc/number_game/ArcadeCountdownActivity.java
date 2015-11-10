@@ -11,7 +11,7 @@ public class ArcadeCountdownActivity extends AppCompatActivity {
 
     private TextView initialCountdown;
     private Handler handler;
-    private int seconds = 3;
+    private int seconds = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,9 @@ public class ArcadeCountdownActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
         }
+
+        // We need this to prevent the delay before '3'
+        initialCountdown.setText("3");
         startInitialCountdown();
     }
 
