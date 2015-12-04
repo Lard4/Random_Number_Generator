@@ -33,10 +33,10 @@
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".NumberActivity"
             android:label="@string/title_activity_number"
@@ -46,6 +46,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.number_game.MainActivity" />
         </activity>
+
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
@@ -55,6 +56,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.number_game.MainActivity" />
         </activity>
+
         <activity
             android:name=".EasterEggActivity"
             android:label="@string/title_activity_easter_egg"
@@ -64,6 +66,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.number_game.MainActivity" />
         </activity>
+
         <activity
             android:name=".GetButtonActivity"
             android:label="@string/title_activity_get_button"
@@ -73,6 +76,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.number_game.MainActivity" />
         </activity>
+
         <activity
             android:name=".ArcadeActivity"
             android:label="@string/title_activity_arcade"
@@ -82,12 +86,32 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dirinc.number_game.MainActivity" />
         </activity>
+
         <activity
             android:name=".ArcadeCountdownActivity"
             android:label="@string/title_activity_arcade_countdown"
             android:screenOrientation="portrait"
             android:theme="@style/Initial_Countdown" >
         </activity>
+
+        <activity
+            android:name=".ArcadeClickFast"
+            android:label="@string/title_activity_arcade_click_fast"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dirinc.number_game.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".RewardedVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name="com.purplebrain.adbuddiz.sdk.AdBuddizActivity"
+            android:theme="@android:style/Theme.Translucent" />
+
     </application>
 
 </manifest>

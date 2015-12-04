@@ -15,6 +15,7 @@ import com.google.android.gms.common.*;
 import com.google.android.gms.common.api.*;
 import com.google.android.gms.games.*;
 import com.google.example.games.basegameutils.*;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 public class MainActivity extends Activity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
@@ -40,6 +41,9 @@ public class MainActivity extends Activity
         setColors();
         super.onCreate(icicle);
         setContentView(R.layout.activity_main);
+
+        AdBuddiz.setPublisherKey(String.valueOf(R.string.ad_id));
+        AdBuddiz.cacheAds(this);
 
         if (android.os.Build.VERSION.SDK_INT>=19) {
             getWindow().getDecorView().setSystemUiVisibility(

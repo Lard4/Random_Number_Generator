@@ -73,9 +73,8 @@ public class GetButtonActivity extends AppCompatActivity implements View.OnTouch
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     better_button_1.setBackgroundColor(getResources().getColor(R.color.button_background_pressed));
                     v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                    isApply0 = false;
-                    isApply1 = true;
-                    setButton();
+                    startActivity(new Intent(GetButtonActivity.this, RewardedVideoActivity.class));
+                    finish();
 
                     return true;
                 }

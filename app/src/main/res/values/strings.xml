@@ -9,7 +9,8 @@
     <string name="action_settings">Settings</string>
     <string name="button_more">Get New Buttons</string>
     <string name="button_arcade">Arcade</string>
-    <string name="button_arcade_go">CLICK ME</string>
+    <string name="button_arcade_go">Challenge Mode</string>
+    <string name="button_click_fast">CLICK ME!</string>
 
     <string name="leaderboard_STANDARDBUTTON">CgkIyeW4_uENEAIQBg</string>
     <string name="leaderboard_BETTERBUTTON">CgkIyeW4_uENEAIQBw</string>
@@ -19,6 +20,8 @@
     <string name="achievement_PURPLEY">CgkIyeW4_uENEAIQAQ</string>
     <string name="achievement_HALFWAYTHERE">CgkIyeW4_uENEAIQAg</string>
     <string name="achievement_MLGNUMBERGENERATOR">CgkIyeW4_uENEAIQBQ</string>
+
+    <string name="ad_id">11730c9c–7bc5–4c07–922c-0493af05c633</string>
 
     <string name="better_button_1">Activate Better Button #1</string>
     <string name="better_button_0">Activate Standard Button</string>
@@ -39,5 +42,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_arcade_countdown">ArcadeCountdownActivity</string>
+    <string name="title_activity_arcade_click_fast">ArcadeClickFast</string>
 
 </resources>

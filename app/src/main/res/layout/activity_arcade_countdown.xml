@@ -13,7 +13,6 @@
     <TextView android:theme="@style/Initial_Countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GO"
         android:id="@+id/initialCountdown"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />

@@ -48,11 +48,20 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="Initial_Countdown" parent="Theme.AppCompat">
-        <item name="android:windowBackground">@android:color/transparent</item>
+    <style name="Initial_Countdown" parent="AppTheme">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/initial_countdown_text</item>
     </style>
+
+            <style name="dynamic_countdown_orange" parent="Initial_Countdown">
+                <item name="android:background">@color/dynamic_countdown_orange</item>
+            </style>
+            <style name="dynamic_countdown_yellow" parent="Initial_Countdown">
+                <item name="android:background">@color/dynamic_countdown_yellow</item>
+            </style>
+            <style name="dynamic_countdown_green" parent="Initial_Countdown">
+                <item name="android:background">@color/dynamic_countdown_green</item>
+            </style>
 
     <style name="Purple">
         <item name="android:background">@color/purple_primary_background</item>

@@ -10,6 +10,9 @@
     <dimen name="new_color_unlock">24sp</dimen>
     <dimen name="dialogTitle">32sp</dimen>
 
+    <dimen name="time_remaining">60sp</dimen>
+    <dimen name="clicks">25sp</dimen>
+
     <dimen name="leaderboard_icon_size">35dp</dimen>
     <dimen name="back_icon_size">35dp</dimen>
 

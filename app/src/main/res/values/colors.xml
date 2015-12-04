@@ -6,6 +6,12 @@
     <color name="primary_background">#FF4CAF50</color>
     <color name="primary_background_dark">#FF388E3C</color>
 
+    <color name="dynamic_countdown">#FFFF0000</color>
+    <color name="dynamic_countdown_orange">#FFFFA500</color>
+    <color name="dynamic_countdown_yellow">#FFFFFF00</color>
+    <color name="dynamic_countdown_green">#FF008000</color>
+
+
     <color name="tinter">#16000000</color>
     <color name="tinter_dark">#32000000</color>
 

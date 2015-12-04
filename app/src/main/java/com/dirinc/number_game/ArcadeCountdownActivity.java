@@ -1,5 +1,6 @@
 package com.dirinc.number_game;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,9 +55,18 @@ public class ArcadeCountdownActivity extends AppCompatActivity {
             public void run() {
                 if (seconds == 0) {
                     initialCountdown.setText("GO");
+                    setTheme(R.style.dynamic_countdown_green);
                 }
                 else {
                     initialCountdown.setText(String.valueOf(seconds));
+                    switch (seconds) {
+                        case 2:
+                            setTheme(R.style.dynamic_countdown_yellow);
+                            break;
+                        case 1:
+                            setTheme(R.style.dynamic_countdown_orange);
+                            break;
+                    }
                 }
                 seconds--;
 
@@ -72,8 +82,15 @@ public class ArcadeCountdownActivity extends AppCompatActivity {
                 public void run() {
                     // make dat activity disappear ;)
                     finish();
+                    startActivity();
                 }
             }, 1750);
         }
+    }
+
+    public void startActivity() {
+        Intent changeActivities = new Intent(this, ArcadeClickFast.class);
+        Log.d("ActivitySwitch", "Switching to Click Fast Activity");
+        startActivity(changeActivities);
     }
 }
